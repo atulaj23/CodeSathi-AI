@@ -25,9 +25,17 @@ body {
 /* Sidebar */
 
 .sidebar {
-  width: 260px;
-  background: #202123;
-  padding: 20px;
+
+  width:260px;
+
+  background:rgba(32,33,35,0.65);
+
+  backdrop-filter:blur(15px);
+
+  padding:20px;
+
+  border-right:1px solid rgba(255,255,255,0.08);
+
 }
 
 .new-chat-btn {
@@ -58,10 +66,17 @@ body {
 /* Chat */
 
 .chat-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #343541;
+
+  flex:1;
+
+  display:flex;
+
+  flex-direction:column;
+
+  background:rgba(52,53,65,0.55);
+
+  backdrop-filter:blur(12px);
+
 }
 
 .messages {

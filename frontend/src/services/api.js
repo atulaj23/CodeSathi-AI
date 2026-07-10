@@ -1,15 +1,136 @@
 const API = "http://127.0.0.1:5000";
 
-export async function sendMessage(message) {
-  const response = await fetch(`${API}/chat`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      message,
-    }),
-  });
+
+// Send Message
+export async function sendMessage(data) {
+
+
+  const response = await fetch(
+
+    `${API}/chat`,
+
+    {
+
+      method:"POST",
+
+      headers:{
+
+        "Content-Type":"application/json"
+
+      },
+
+
+      body:JSON.stringify({
+
+        message:data.message,
+
+        file:data.file || null,
+
+        user_id:data.user_id
+
+      })
+
+    }
+
+  );
+
 
   return await response.json();
+
+}
+
+
+
+
+
+// Get History
+
+export async function getHistory(user_id) {
+
+
+  const response = await fetch(
+
+    `${API}/history?user_id=${user_id}`
+
+  );
+
+
+  return await response.json();
+
+
+}
+
+
+
+
+
+
+// Signup
+
+export async function signupUser(data){
+
+
+  const response = await fetch(
+
+    `${API}/signup`,
+
+    {
+
+      method:"POST",
+
+      headers:{
+
+        "Content-Type":"application/json"
+
+      },
+
+
+      body:JSON.stringify(data)
+
+    }
+
+  );
+
+
+  return await response.json();
+
+
+}
+
+
+
+
+
+
+
+// Login
+
+export async function loginUser(data){
+
+
+  const response = await fetch(
+
+    `${API}/login`,
+
+    {
+
+      method:"POST",
+
+      headers:{
+
+        "Content-Type":"application/json"
+
+      },
+
+
+      body:JSON.stringify(data)
+
+    }
+
+  );
+
+
+  return await response.json();
+
+
 }

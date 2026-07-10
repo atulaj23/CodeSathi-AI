@@ -1,0 +1,54 @@
+.avatar-container{
+
+position:absolute;
+
+right:30px;
+
+top:60px;
+
+width:420px;
+
+height:560px;
+
+z-index:3;
+
+pointer-events:none;
+
+
+/* AI hologram glow */
+
+filter:
+drop-shadow(0 0 25px #2563eb)
+drop-shadow(0 0 45px #9333ea);
+
+
+}
+
+
+/* Canvas full size */
+
+.avatar-container canvas{
+
+width:100% !important;
+
+height:100% !important;
+
+}
+
+
+
+/* Responsive */
+
+@media(max-width:1200px){
+
+.avatar-container{
+
+right:10px;
+
+width:350px;
+
+height:480px;
+
+}
+
+}

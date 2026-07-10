@@ -1,57 +1,282 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+
 from services.ai_service import generate_response
+
+from routes.upload import upload_bp
+from routes.auth import auth_bp
+
+from database.db import db
+from database.models import ChatHistory
+
 
 app = Flask(__name__)
 
-# Allow React frontend to access the backend
+
 CORS(app)
+
+
+
+# Database
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///chat_history.db"
+
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+
+db.init_app(app)
+
+
+
+with app.app_context():
+
+    db.create_all()
+
+
+
+# Routes
+
+app.register_blueprint(upload_bp)
+
+app.register_blueprint(auth_bp)
+
+
 
 
 @app.route("/", methods=["GET"])
 def home():
+
     return jsonify({
-        "app": "CodeSathi AI",
-        "status": "Running",
-        "version": "1.0"
+
+        "app":"CodeSathi AI",
+
+        "status":"Running"
+
     })
 
+
+
+
+
+
+# CHAT API
 
 @app.route("/chat", methods=["POST"])
 def chat():
 
     try:
+
+
         data = request.get_json()
 
-        if not data:
+
+
+        user_id = data.get("user_id")
+
+
+        message = data.get(
+            "message",
+            ""
+        ).strip()
+
+
+
+        uploaded_file = data.get(
+            "file",
+            None
+        )
+
+
+
+        if not user_id:
+
             return jsonify({
-                "success": False,
-                "message": "No JSON data received."
-            }), 400
 
-        user_message = data.get("message", "").strip()
+                "success":False,
 
-        if not user_message:
+                "message":"User not logged in"
+
+            }),401
+
+
+
+
+        if not message:
+
             return jsonify({
-                "success": False,
-                "message": "Message cannot be empty."
-            }), 400
 
-        ai_reply = generate_response(user_message)
+                "success":False,
+
+                "message":"Message empty"
+
+            }),400
+
+
+
+
+        ai_reply = generate_response(
+
+            message,
+
+            uploaded_file
+
+        )
+
+
+
+
+        new_chat = ChatHistory(
+
+            user_id=user_id,
+
+            user_message=message,
+
+            ai_response=ai_reply
+
+        )
+
+
+
+        db.session.add(new_chat)
+
+        db.session.commit()
+
+
+
 
         return jsonify({
-            "success": True,
-            "reply": ai_reply
+
+            "success":True,
+
+            "reply":ai_reply
+
         })
 
+
+
     except Exception as e:
-        print("ERROR:", e)
+
+
+        print("CHAT ERROR:",e)
+
 
         return jsonify({
-            "success": False,
-            "message": str(e)
-        }), 500
+
+            "success":False,
+
+            "message":str(e)
+
+        }),500
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+
+
+
+
+
+# HISTORY API
+
+@app.route("/history", methods=["GET"])
+def history():
+
+
+    try:
+
+
+        user_id = request.args.get(
+            "user_id"
+        )
+
+
+
+        if not user_id:
+
+            return jsonify({
+
+                "success":False,
+
+                "message":"User id required"
+
+            }),400
+
+
+
+
+        chats = ChatHistory.query.filter_by(
+
+            user_id=user_id
+
+        ).order_by(
+
+            ChatHistory.created_at.desc()
+
+        ).all()
+
+
+
+
+        data=[]
+
+
+
+        for chat in chats:
+
+
+            data.append({
+
+                "id":chat.id,
+
+                "user_message":chat.user_message,
+
+                "ai_response":chat.ai_response,
+
+                "created_at":str(chat.created_at)
+
+            })
+
+
+
+
+        return jsonify({
+
+            "success":True,
+
+            "history":data
+
+        })
+
+
+
+
+    except Exception as e:
+
+
+        print("HISTORY ERROR:",e)
+
+
+        return jsonify({
+
+            "success":False,
+
+            "message":str(e)
+
+        }),500
+
+
+
+
+
+
+
+if __name__=="__main__":
+
+
+    app.run(
+
+        host="0.0.0.0",
+
+        port=5000,
+
+        debug=True
+
+    )
