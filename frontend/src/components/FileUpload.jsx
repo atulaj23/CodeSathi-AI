@@ -1,62 +1,158 @@
-import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import axios from "axios";
+import { useState } from "react";
 
 export default function FileUpload() {
 
-  const onDrop = useCallback(async (acceptedFiles) => {
+  const [fileName, setFileName] = useState("");
+
+
+
+  async function uploadFile(e) {
+
+
+    const file = e.target.files[0];
+
+
+    if(!file) return;
+
+
+
+    setFileName(file.name);
+
+
 
     const formData = new FormData();
 
-    formData.append("file", acceptedFiles[0]);
+    formData.append(
+      "file",
+      file
+    );
+
+
 
     try {
 
-      const res = await axios.post(
+
+      const response = await fetch(
+
         "http://127.0.0.1:5000/upload",
-        formData,
+
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+
+          method:"POST",
+
+          body:formData
+
         }
+
       );
 
-      localStorage.setItem("uploadedFile", res.data.path);
 
-alert("Uploaded Successfully");
 
-    } catch (err) {
+      const data = await response.json();
 
-      alert("Upload Failed");
+
+
+      console.log(
+        "UPLOAD:",
+        data
+      );
+
+
+
+      if(data.success){
+
+
+        // sirf current uploaded file save hogi
+
+        localStorage.setItem(
+
+          "uploadedFile",
+
+          data.file_path
+
+        );
+
+
+      }
+
+
 
     }
 
-  }, []);
+    catch(error){
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
+
+      console.log(
+        "Upload Error:",
+        error
+      );
+
+
+    }
+
+  }
+
+
+
+
+
+  function removeFile(){
+
+
+    localStorage.removeItem(
+      "uploadedFile"
+    );
+
+
+    setFileName("");
+
+  }
+
+
+
+
 
   return (
 
-    <div
-      {...getRootProps()}
-      style={{
-        border: "2px dashed #4f46e5",
-        padding: "30px",
-        borderRadius: "15px",
-        textAlign: "center",
-        cursor: "pointer",
-        margin: "20px",
-      }}
-    >
+    <div className="file-upload">
 
-      <input {...getInputProps()} />
 
-      <h3>📎 Drag & Drop File Here</h3>
+      <input
 
-      <p>or click to upload</p>
+        type="file"
+
+        onChange={uploadFile}
+
+      />
+
+
+
+      {
+
+        fileName && (
+
+          <div>
+
+            📎 {fileName}
+
+
+            <button
+
+              onClick={removeFile}
+
+            >
+
+              ❌
+
+            </button>
+
+
+          </div>
+
+        )
+
+      }
+
 
     </div>
 

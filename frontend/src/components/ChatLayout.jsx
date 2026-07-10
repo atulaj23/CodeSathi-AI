@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Sidebar from "./Sidebar";
 import ChatWindow from "./ChatWindow";
 import InputBox from "./InputBox";
 import FileUpload from "./FileUpload";
 
-import { sendMessage as sendMessageAPI } from "../services/api";
+import {
+  sendMessage as sendMessageAPI,
+  getHistory
+} from "../services/api";
 
 
-export default function ChatLayout() {
+
+export default function ChatLayout(){
 
 
   const user = JSON.parse(
@@ -20,17 +24,24 @@ export default function ChatLayout() {
 
 
 
-  const [message, setMessage] = useState("");
+  const [message,setMessage] = useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [loading,setLoading] = useState(false);
 
 
 
-  const [messages, setMessages] = useState([
+  const [selectedFile,setSelectedFile] = useState(null);
+
+
+
+  const [messages,setMessages] = useState([
 
     {
+
       role:"ai",
-      text:"Hi! Main CodeSathi AI hu. Kya banana hai aaj? 🚀"
+
+      text:"Hi! Main CodeSathi AI hu 🚀"
+
     }
 
   ]);
@@ -39,27 +50,136 @@ export default function ChatLayout() {
 
 
 
-  const sendMessage = async()=>{
+
+  useEffect(()=>{
 
 
-    if(!message.trim()) return;
+    if(user_id){
+
+      loadHistory();
+
+    }
+
+
+  },[]);
 
 
 
-    const userMessage = message;
 
 
 
-    setMessages((prev)=>[
+
+  async function loadHistory(){
+
+
+    try{
+
+
+      const data = await getHistory(user_id);
+
+
+
+      if(data.success){
+
+
+        let old=[];
+
+
+
+        data.history.reverse().forEach(chat=>{
+
+
+          old.push({
+
+            role:"user",
+
+            text:chat.user_message
+
+          });
+
+
+
+          old.push({
+
+            role:"ai",
+
+            text:chat.ai_response
+
+          });
+
+
+
+        });
+
+
+
+        if(old.length){
+
+          setMessages(old);
+
+        }
+
+
+      }
+
+
+
+    }
+
+    catch(error){
+
+      console.log(error);
+
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+  async function sendMessage(){
+
+
+    if(!message.trim() && !selectedFile){
+
+      return;
+
+    }
+
+
+
+
+    const userText = message || 
+    "Please analyze this file";
+
+
+
+
+    setMessages(prev=>[
 
       ...prev,
 
       {
+
         role:"user",
-        text:userMessage
+
+        text:
+
+        selectedFile
+
+        ? `${userText} 📎 ${selectedFile.name}`
+
+        : userText
+
       }
 
     ]);
+
 
 
 
@@ -70,23 +190,80 @@ export default function ChatLayout() {
 
 
 
+
+
     try{
 
 
-      const uploadedFile = localStorage.getItem(
-        "uploadedFile"
-      );
+      let filePath = null;
 
 
 
 
-      const data = await sendMessageAPI({
+      // upload file first
 
-        message:userMessage,
+      if(selectedFile){
 
-        file:uploadedFile,
 
-        user_id:user_id
+
+        const formData = new FormData();
+
+
+        formData.append(
+          "file",
+          selectedFile
+        );
+
+
+
+        const uploadResponse = await fetch(
+
+          "http://127.0.0.1:5000/upload",
+
+          {
+
+            method:"POST",
+
+            body:formData
+
+          }
+
+        );
+
+
+
+        const uploadData =
+        await uploadResponse.json();
+
+
+
+        if(uploadData.success){
+
+          filePath =
+          uploadData.file_path;
+
+        }
+
+
+      }
+
+
+
+
+
+
+      const response =
+      await sendMessageAPI({
+
+
+        message:userText,
+
+
+        user_id:user_id,
+
+
+        file:filePath
+
 
       });
 
@@ -94,7 +271,9 @@ export default function ChatLayout() {
 
 
 
-      setMessages((prev)=>[
+
+
+      setMessages(prev=>[
 
         ...prev,
 
@@ -102,7 +281,11 @@ export default function ChatLayout() {
 
           role:"ai",
 
-          text:data.reply || "No response"
+          text:
+
+          response.reply ||
+
+          "No response"
 
         }
 
@@ -111,7 +294,14 @@ export default function ChatLayout() {
 
 
 
+      // clear attachment
+
+      setSelectedFile(null);
+
+
+
     }
+
 
     catch(error){
 
@@ -120,7 +310,7 @@ export default function ChatLayout() {
 
 
 
-      setMessages((prev)=>[
+      setMessages(prev=>[
 
         ...prev,
 
@@ -138,10 +328,12 @@ export default function ChatLayout() {
 
 
 
+
+
     setLoading(false);
 
 
-  };
+  }
 
 
 
@@ -149,7 +341,33 @@ export default function ChatLayout() {
 
 
 
-  const openHistoryChat = (chat)=>{
+  function newChat(){
+
+
+    setMessages([
+
+      {
+
+        role:"ai",
+
+        text:"New chat started 🚀"
+
+      }
+
+    ]);
+
+
+    setSelectedFile(null);
+
+
+  }
+
+
+
+
+
+
+  function openChat(chat){
 
 
     setMessages([
@@ -162,7 +380,6 @@ export default function ChatLayout() {
 
       },
 
-
       {
 
         role:"ai",
@@ -173,30 +390,8 @@ export default function ChatLayout() {
 
     ]);
 
-  };
 
-
-
-
-
-
-
-  const newChat = ()=>{
-
-
-    setMessages([
-
-      {
-
-        role:"ai",
-
-        text:"Hi! Main CodeSathi AI hu. Kya banana hai aaj? 🚀"
-
-      }
-
-    ]);
-
-  };
+  }
 
 
 
@@ -210,18 +405,15 @@ export default function ChatLayout() {
 
       <Sidebar
 
-        onSelectChat={openHistoryChat}
-
         onNewChat={newChat}
+
+        onSelectChat={openChat}
 
       />
 
 
 
       <div className="chat-area">
-
-
-        <FileUpload />
 
 
 
@@ -235,17 +427,27 @@ export default function ChatLayout() {
 
 
 
+
         <InputBox
+
 
           message={message}
 
+
           setMessage={setMessage}
+
 
           sendMessage={sendMessage}
 
-          loading={loading}
+
+          selectedFile={selectedFile}
+
+
+          setSelectedFile={setSelectedFile}
+
 
         />
+
 
 
       </div>
