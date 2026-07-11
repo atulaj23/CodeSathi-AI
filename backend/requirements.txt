@@ -6,4 +6,12 @@ python-dotenv
 google-genai
 werkzeug
 gunicorn
+
+# File Reading
 pypdf
+python-docx
+openpyxl
+pandas
+
+# Image Support
+pillow
