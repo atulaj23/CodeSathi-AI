@@ -1,1 +1,8 @@
+Flask
+flask-cors
+flask-sqlalchemy
+requests
+python-dotenv
+google-genai
+werkzeug
 gunicorn
