@@ -218,7 +218,7 @@ export default function ChatLayout(){
 
         const uploadResponse = await fetch(
 
-          "http://127.0.0.1:5000/upload",
+          "https://codesathi-ai-qwex.onrender.com/upload",
 
           {
 
