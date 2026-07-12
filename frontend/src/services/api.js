@@ -1,41 +1,57 @@
-const API = "http://127.0.0.1:5000";
+const API = "https://codesathi-ai-qwex.onrender.com";
 
 
-// Send Message
+// ================= SEND MESSAGE =================
+
 export async function sendMessage(data) {
 
+  try {
 
-  const response = await fetch(
+    const response = await fetch(
+      `${API}/chat`,
+      {
+        method: "POST",
 
-    `${API}/chat`,
+        headers: {
+          "Content-Type": "application/json"
+        },
 
-    {
+        body: JSON.stringify({
 
-      method:"POST",
+          message: data.message,
 
-      headers:{
+          file: data.file || null,
 
-        "Content-Type":"application/json"
+          user_id: data.user_id
 
-      },
-
-
-      body:JSON.stringify({
-
-        message:data.message,
-
-        file:data.file || null,
-
-        user_id:data.user_id
-
-      })
-
-    }
-
-  );
+        })
+      }
+    );
 
 
-  return await response.json();
+    const result = await response.json();
+
+
+    console.log("CHAT RESPONSE:", result);
+
+
+    return result;
+
+
+  } catch (error) {
+
+    console.log("SEND MESSAGE ERROR:", error);
+
+
+    return {
+
+      success:false,
+
+      error:error.message
+
+    };
+
+  }
 
 }
 
@@ -43,19 +59,96 @@ export async function sendMessage(data) {
 
 
 
-// Get History
+// ================= GET HISTORY =================
 
 export async function getHistory(user_id) {
 
+  try {
 
-  const response = await fetch(
+    const response = await fetch(
 
-    `${API}/history?user_id=${user_id}`
+      `${API}/history?user_id=${user_id}`
 
-  );
+    );
 
 
-  return await response.json();
+    const result = await response.json();
+
+
+    console.log("HISTORY RESPONSE:", result);
+
+
+    return result;
+
+
+  } catch(error) {
+
+
+    console.log("HISTORY ERROR:", error);
+
+
+    return {
+
+      success:false,
+
+      error:error.message
+
+    };
+
+  }
+
+}
+
+
+
+
+
+// ================= SIGNUP =================
+
+export async function signupUser(data) {
+
+
+  try {
+
+
+    const response = await fetch(
+
+      `${API}/signup`,
+
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify(data)
+
+      }
+
+    );
+
+
+    return await response.json();
+
+
+
+  } catch(error){
+
+
+    return {
+
+      success:false,
+
+      error:error.message
+
+    };
+
+
+  }
 
 
 }
@@ -65,72 +158,54 @@ export async function getHistory(user_id) {
 
 
 
-// Signup
+// ================= LOGIN =================
 
-export async function signupUser(data){
-
-
-  const response = await fetch(
-
-    `${API}/signup`,
-
-    {
-
-      method:"POST",
-
-      headers:{
-
-        "Content-Type":"application/json"
-
-      },
+export async function loginUser(data) {
 
 
-      body:JSON.stringify(data)
-
-    }
-
-  );
+  try {
 
 
-  return await response.json();
+    const response = await fetch(
+
+      `${API}/login`,
+
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "Content-Type":"application/json"
+
+        },
 
 
-}
+        body:JSON.stringify(data)
 
 
+      }
 
+    );
+
+
+    return await response.json();
 
 
 
-
-// Login
-
-export async function loginUser(data){
+  } catch(error){
 
 
-  const response = await fetch(
+    return {
 
-    `${API}/login`,
+      success:false,
 
-    {
+      error:error.message
 
-      method:"POST",
-
-      headers:{
-
-        "Content-Type":"application/json"
-
-      },
+    };
 
 
-      body:JSON.stringify(data)
-
-    }
-
-  );
-
-
-  return await response.json();
+  }
 
 
 }

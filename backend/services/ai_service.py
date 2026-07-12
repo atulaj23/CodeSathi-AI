@@ -6,12 +6,6 @@ from services.file_reader import read_file
 
 
 
-client = genai.Client(
-    api_key=Config.GEMINI_API_KEY
-)
-
-
-
 SYSTEM_PROMPT = """
 You are CodeSathi AI.
 
@@ -26,24 +20,30 @@ If no file is provided, answer normally.
 
 
 
-
 def gemini_call(message):
 
-    response = client.models.generate_content(
+    try:
 
-        model="gemini-2.5-flash",
-
-        contents=[
-            SYSTEM_PROMPT,
-            message
-        ]
-
-    )
+        client = genai.Client(
+            api_key=Config.GEMINI_API_KEY
+        )
 
 
-    if response and response.text:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=[
+                SYSTEM_PROMPT,
+                message
+            ]
+        )
 
-        return response.text
+
+        if response and response.text:
+            return response.text
+
+
+    except Exception as e:
+        print("Gemini Error:", e)
 
 
     return None
@@ -52,51 +52,60 @@ def gemini_call(message):
 
 
 
-
 def openrouter_call(message):
 
-    response = requests.post(
+    try:
 
-        "https://openrouter.ai/api/v1/chat/completions",
+        response = requests.post(
 
-        headers={
+            "https://openrouter.ai/api/v1/chat/completions",
 
-            "Authorization":
-            f"Bearer {Config.OPENROUTER_API_KEY}",
-
-            "Content-Type":
-            "application/json"
-
-        },
+            headers={
+                "Authorization": f"Bearer {Config.OPENROUTER_API_KEY}",
+                "Content-Type": "application/json"
+            },
 
 
-        json={
+            json={
 
-            "model":
-            "openai/gpt-3.5-turbo",
+                "model": "openai/gpt-3.5-turbo",
 
-            "messages":[
+                "messages":[
 
-                {
-                    "role":"system",
-                    "content":SYSTEM_PROMPT
-                },
+                    {
+                        "role":"system",
+                        "content":SYSTEM_PROMPT
+                    },
 
-                {
-                    "role":"user",
-                    "content":message
-                }
+                    {
+                        "role":"user",
+                        "content":message
+                    }
 
-            ]
+                ]
 
-        }
+            }
 
-    )
+        )
 
 
-    data=response.json()
+        data = response.json()
 
-    return data["choices"][0]["message"]["content"]
+
+        if "choices" in data:
+
+            return data["choices"][0]["message"]["content"]
+
+
+        print("OpenRouter Error:", data)
+
+
+    except Exception as e:
+
+        print("OpenRouter Error:", e)
+
+
+    return None
 
 
 
@@ -110,19 +119,15 @@ def generate_response(message, file=None):
 
 
 
-    try:
+    if file:
 
 
-        if file:
-
+        try:
 
             file_text = read_file(file)
 
 
-            if file_text:
-
-
-                final_message=f"""
+            final_message = f"""
 
 File Content:
 
@@ -133,45 +138,35 @@ User Question:
 
 {message}
 
-
-Answer based on file.
 """
 
 
+        except Exception as e:
 
-        result = gemini_call(final_message)
-
-
-
-        if result:
-
-            return result
-
-
-
-    except Exception as e:
-
-        print(
-            "Gemini Error:",
-            e
-        )
+            print("File Read Error:", e)
 
 
 
 
-    try:
 
-        return openrouter_call(final_message)
+    response = gemini_call(final_message)
 
 
-    except Exception as e:
+    if response:
 
-        print(
-            "OpenRouter Error:",
-            e
-        )
+        return response
 
 
 
 
-    return "AI temporarily unavailable"
+    response = openrouter_call(final_message)
+
+
+    if response:
+
+        return response
+
+
+
+
+    return "⚠️ AI response nahi aa raha. API check karo."
