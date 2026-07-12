@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import ChatWindow from "./ChatWindow";
 import InputBox from "./InputBox";
+import FileUpload from "./FileUpload";
 
 import {
   sendMessage as sendMessageAPI,
@@ -10,88 +11,133 @@ import {
 } from "../services/api";
 
 
-const API_URL = "https://codesathi-ai-qwex.onrender.com";
-
 
 export default function ChatLayout(){
+
 
   const user = JSON.parse(
     localStorage.getItem("user")
   );
 
+
   const user_id = user?.id;
 
 
+
   const [message,setMessage] = useState("");
+
   const [loading,setLoading] = useState(false);
+
+
 
   const [selectedFile,setSelectedFile] = useState(null);
 
 
+
   const [messages,setMessages] = useState([
+
     {
+
       role:"ai",
+
       text:"Hi! Main CodeSathi AI hu 🚀"
+
     }
+
   ]);
+
+
+
 
 
 
   useEffect(()=>{
 
+
     if(user_id){
+
       loadHistory();
+
     }
+
 
   },[]);
 
 
 
+
+
+
+
   async function loadHistory(){
 
+
     try{
+
 
       const data = await getHistory(user_id);
 
 
+
       if(data.success){
 
+
         let old=[];
+
 
 
         data.history.reverse().forEach(chat=>{
 
 
           old.push({
+
             role:"user",
+
             text:chat.user_message
+
           });
+
 
 
           old.push({
+
             role:"ai",
+
             text:chat.ai_response
+
           });
+
 
 
         });
 
 
+
         if(old.length){
+
           setMessages(old);
+
         }
+
 
       }
 
 
+
     }
+
     catch(error){
 
       console.log(error);
 
     }
 
+
   }
+
+
+
+
 
 
 
@@ -100,42 +146,64 @@ export default function ChatLayout(){
 
 
     if(!message.trim() && !selectedFile){
+
       return;
+
     }
 
 
 
-    const userText = message || "Please analyze this file";
+
+    const userText = message || 
+    "Please analyze this file";
+
 
 
 
     setMessages(prev=>[
+
       ...prev,
+
       {
+
         role:"user",
-        text:selectedFile
+
+        text:
+
+        selectedFile
+
         ? `${userText} 📎 ${selectedFile.name}`
+
         : userText
+
       }
+
     ]);
 
 
 
+
     setMessage("");
+
     setLoading(true);
+
+
+
 
 
 
     try{
 
 
-      let filePath=null;
+      let filePath = null;
 
 
 
-      // File Upload
+
+      // upload file first
 
       if(selectedFile){
+
 
 
         const formData = new FormData();
@@ -150,11 +218,14 @@ export default function ChatLayout(){
 
         const uploadResponse = await fetch(
 
-          `${API_URL}/upload`,
+          "http://127.0.0.1:5000/upload",
 
           {
+
             method:"POST",
+
             body:formData
+
           }
 
         );
@@ -169,7 +240,7 @@ export default function ChatLayout(){
         if(uploadData.success){
 
           filePath =
-          uploadData.path;
+          uploadData.file_path;
 
         }
 
@@ -179,18 +250,24 @@ export default function ChatLayout(){
 
 
 
-      // Chat API
+
 
       const response =
       await sendMessageAPI({
 
+
         message:userText,
+
 
         user_id:user_id,
 
+
         file:filePath
 
+
       });
+
+
 
 
 
@@ -205,7 +282,9 @@ export default function ChatLayout(){
           role:"ai",
 
           text:
+
           response.reply ||
+
           "No response"
 
         }
@@ -214,16 +293,21 @@ export default function ChatLayout(){
 
 
 
+
+      // clear attachment
+
       setSelectedFile(null);
 
 
 
     }
 
+
     catch(error){
 
 
       console.log(error);
+
 
 
       setMessages(prev=>[
@@ -234,20 +318,24 @@ export default function ChatLayout(){
 
           role:"ai",
 
-          text:"❌ Server error aa gaya"
+          text:"❌ Error aa gaya"
 
         }
 
       ]);
 
-
     }
+
+
 
 
 
     setLoading(false);
 
+
   }
+
+
 
 
 
@@ -255,17 +343,26 @@ export default function ChatLayout(){
 
   function newChat(){
 
+
     setMessages([
+
       {
+
         role:"ai",
+
         text:"New chat started 🚀"
+
       }
+
     ]);
 
 
     setSelectedFile(null);
 
+
   }
+
+
 
 
 
@@ -276,18 +373,26 @@ export default function ChatLayout(){
     setMessages([
 
       {
+
         role:"user",
+
         text:chat.user_message
+
       },
 
       {
+
         role:"ai",
+
         text:chat.ai_response
+
       }
 
     ]);
 
+
   }
+
 
 
 
@@ -311,6 +416,7 @@ export default function ChatLayout(){
       <div className="chat-area">
 
 
+
         <ChatWindow
 
           messages={messages}
@@ -318,6 +424,7 @@ export default function ChatLayout(){
           loading={loading}
 
         />
+
 
 
 
@@ -340,6 +447,7 @@ export default function ChatLayout(){
 
 
         />
+
 
 
       </div>
