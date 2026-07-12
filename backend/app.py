@@ -16,7 +16,7 @@ CORS(app)
 
 
 # Database (new fresh database)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///new_chat_history.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///codesathi.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
