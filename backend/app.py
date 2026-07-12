@@ -12,11 +12,14 @@ from database.models import ChatHistory
 
 app = Flask(__name__)
 
+
 CORS(app)
 
 
-# Database (new fresh database)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///codesathi.db"
+
+# Database
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///chat_history.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -25,16 +28,13 @@ db.init_app(app)
 
 
 
-# Create tables
 with app.app_context():
 
     db.create_all()
 
-    print("DATABASE CREATED SUCCESSFULLY")
 
 
-
-# Blueprints
+# Routes
 
 app.register_blueprint(upload_bp)
 
@@ -42,18 +42,18 @@ app.register_blueprint(auth_bp)
 
 
 
-# Home
 
 @app.route("/", methods=["GET"])
 def home():
 
     return jsonify({
 
-        "app": "CodeSathi AI",
+        "app":"CodeSathi AI",
 
-        "status": "Running"
+        "status":"Running"
 
     })
+
 
 
 
@@ -66,15 +66,19 @@ def chat():
 
     try:
 
+
         data = request.get_json()
 
 
+
         user_id = data.get("user_id")
+
 
         message = data.get(
             "message",
             ""
         ).strip()
+
 
 
         uploaded_file = data.get(
@@ -83,15 +87,17 @@ def chat():
         )
 
 
+
         if not user_id:
 
             return jsonify({
 
-                "success": False,
+                "success":False,
 
-                "message": "User not logged in"
+                "message":"User not logged in"
 
             }),401
+
 
 
 
@@ -99,16 +105,14 @@ def chat():
 
             return jsonify({
 
-                "success": False,
+                "success":False,
 
-                "message": "Message empty"
+                "message":"Message empty"
 
             }),400
 
 
 
-
-        # AI Response
 
         ai_reply = generate_response(
 
@@ -119,11 +123,7 @@ def chat():
         )
 
 
-        print("AI RESPONSE:", ai_reply)
 
-
-
-        # Save chat
 
         new_chat = ChatHistory(
 
@@ -136,17 +136,19 @@ def chat():
         )
 
 
+
         db.session.add(new_chat)
 
         db.session.commit()
 
 
 
+
         return jsonify({
 
-            "success": True,
+            "success":True,
 
-            "reply": ai_reply
+            "reply":ai_reply
 
         })
 
@@ -155,14 +157,14 @@ def chat():
     except Exception as e:
 
 
-        print("CHAT ERROR:", e)
+        print("CHAT ERROR:",e)
 
 
         return jsonify({
 
-            "success": False,
+            "success":False,
 
-            "message": str(e)
+            "message":str(e)
 
         }),500
 
@@ -177,11 +179,14 @@ def chat():
 @app.route("/history", methods=["GET"])
 def history():
 
+
     try:
+
 
         user_id = request.args.get(
             "user_id"
         )
+
 
 
         if not user_id:
@@ -209,7 +214,9 @@ def history():
 
 
 
+
         data=[]
+
 
 
         for chat in chats:
@@ -217,15 +224,16 @@ def history():
 
             data.append({
 
-                "id": chat.id,
+                "id":chat.id,
 
-                "user_message": chat.user_message,
+                "user_message":chat.user_message,
 
-                "ai_response": chat.ai_response,
+                "ai_response":chat.ai_response,
 
-                "created_at": str(chat.created_at)
+                "created_at":str(chat.created_at)
 
             })
+
 
 
 
@@ -239,10 +247,11 @@ def history():
 
 
 
+
     except Exception as e:
 
 
-        print("HISTORY ERROR:", e)
+        print("HISTORY ERROR:",e)
 
 
         return jsonify({
@@ -258,7 +267,9 @@ def history():
 
 
 
-if __name__ == "__main__":
+
+if __name__=="__main__":
+
 
     app.run(
 
