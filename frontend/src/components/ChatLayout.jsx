@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Sidebar from "./Sidebar";
 import ChatWindow from "./ChatWindow";
 import InputBox from "./InputBox";
-import FileUpload from "./FileUpload";
+import Header from "./Header";
 
 import {
   sendMessage as sendMessageAPI,
   getHistory
 } from "../services/api";
-
 
 
 export default function ChatLayout(){
@@ -28,20 +27,21 @@ export default function ChatLayout(){
 
   const [loading,setLoading] = useState(false);
 
-
-
   const [selectedFile,setSelectedFile] = useState(null);
+
+  const [sidebarOpen,setSidebarOpen] = useState(false);
+
+
+
+  const stopRef = useRef(false);
 
 
 
   const [messages,setMessages] = useState([
 
     {
-
       role:"ai",
-
-      text:"Hi! Main CodeSathi AI hu 🚀"
-
+      text:"Hi! Main CodeSathi AI hu 🚀\n\nAap coding, debugging aur projects me meri help le sakte ho."
     }
 
   ]);
@@ -53,16 +53,13 @@ export default function ChatLayout(){
 
   useEffect(()=>{
 
-
     if(user_id){
 
       loadHistory();
 
     }
 
-
   },[]);
-
 
 
 
@@ -123,9 +120,7 @@ export default function ChatLayout(){
       }
 
 
-
     }
-
     catch(error){
 
       console.log(error);
@@ -134,6 +129,124 @@ export default function ChatLayout(){
 
 
   }
+
+
+
+
+
+
+
+
+
+  function typeAIResponse(text){
+
+
+    const words=text.split(" ");
+
+    let index=0;
+
+
+
+    setMessages(prev=>[
+
+      ...prev,
+
+      {
+
+        role:"ai",
+
+        text:""
+
+      }
+
+    ]);
+
+
+
+
+    stopRef.current=false;
+
+
+
+    const interval=setInterval(()=>{
+
+
+      if(
+
+        stopRef.current ||
+
+        index >= words.length
+
+      ){
+
+
+        clearInterval(interval);
+
+        setLoading(false);
+
+        return;
+
+      }
+
+
+
+      index += 5;
+
+
+
+      setMessages(prev=>{
+
+
+        const updated=[...prev];
+
+
+
+        updated[updated.length-1]={
+
+
+          role:"ai",
+
+          text:words
+
+          .slice(0,index)
+
+          .join(" ")
+
+
+        };
+
+
+        return updated;
+
+
+      });
+
+
+
+    },25);
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  function stopGenerating(){
+
+
+    stopRef.current=true;
+
+    setLoading(false);
+
+
+  }
+
 
 
 
@@ -154,8 +267,8 @@ export default function ChatLayout(){
 
 
 
-    const userText = message || 
-    "Please analyze this file";
+    const userText =
+    message || "Please analyze this file";
 
 
 
@@ -168,17 +281,20 @@ export default function ChatLayout(){
 
         role:"user",
 
-        text:
+        text:selectedFile
 
-        selectedFile
+        ?
 
-        ? `${userText} 📎 ${selectedFile.name}`
+        `${userText} 📎 ${selectedFile.name}`
 
-        : userText
+        :
+
+        userText
 
       }
 
     ]);
+
 
 
 
@@ -192,31 +308,32 @@ export default function ChatLayout(){
 
 
 
+
     try{
 
 
-      let filePath = null;
+      let filePath=null;
 
 
-
-
-      // upload file first
 
       if(selectedFile){
 
 
-
-        const formData = new FormData();
+        const formData=new FormData();
 
 
         formData.append(
+
           "file",
+
           selectedFile
+
         );
 
 
 
-        const uploadResponse = await fetch(
+
+        const uploadResponse=await fetch(
 
           "https://codesathi-ai-qwex.onrender.com/upload",
 
@@ -232,15 +349,16 @@ export default function ChatLayout(){
 
 
 
-        const uploadData =
+
+        const uploadData=
+
         await uploadResponse.json();
 
 
 
         if(uploadData.success){
 
-          filePath =
-          uploadData.file_path;
+          filePath=uploadData.file_path;
 
         }
 
@@ -252,18 +370,14 @@ export default function ChatLayout(){
 
 
 
-      const response =
-      await sendMessageAPI({
 
+      const response=await sendMessageAPI({
 
         message:userText,
 
-
         user_id:user_id,
 
-
         file:filePath
-
 
       });
 
@@ -272,36 +386,20 @@ export default function ChatLayout(){
 
 
 
+      typeAIResponse(
 
-      setMessages(prev=>[
+        response.reply || "No response"
 
-        ...prev,
-
-        {
-
-          role:"ai",
-
-          text:
-
-          response.reply ||
-
-          "No response"
-
-        }
-
-      ]);
+      );
 
 
 
-
-      // clear attachment
 
       setSelectedFile(null);
 
 
 
     }
-
 
     catch(error){
 
@@ -318,22 +416,79 @@ export default function ChatLayout(){
 
           role:"ai",
 
-          text:"❌ Error aa gaya"
+          text:"❌ Server error aa gaya"
 
         }
 
       ]);
+
+
+
+      setLoading(false);
+
+
+    }
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  async function regenerate(){
+
+
+    const lastUser=[...messages]
+
+    .reverse()
+
+    .find(
+
+      msg=>msg.role==="user"
+
+    );
+
+
+
+    if(!lastUser){
+
+      return;
 
     }
 
 
 
 
+    setLoading(true);
 
-    setLoading(false);
+
+
+    const response=await sendMessageAPI({
+
+      message:lastUser.text,
+
+      user_id:user_id
+
+    });
+
+
+
+    typeAIResponse(
+
+      response.reply || "No response"
+
+    );
 
 
   }
+
+
 
 
 
@@ -357,10 +512,10 @@ export default function ChatLayout(){
     ]);
 
 
-    setSelectedFile(null);
-
-
   }
+
+
+
 
 
 
@@ -380,6 +535,7 @@ export default function ChatLayout(){
 
       },
 
+
       {
 
         role:"ai",
@@ -398,22 +554,100 @@ export default function ChatLayout(){
 
 
 
+
+
+
   return (
 
     <div className="layout">
 
 
-      <Sidebar
 
-        onNewChat={newChat}
+      {
+        sidebarOpen && (
 
-        onSelectChat={openChat}
+          <div
 
-      />
+            className="sidebar-overlay"
+
+            onClick={()=>setSidebarOpen(false)}
+
+          ></div>
+
+        )
+      }
+
+
+
+
+
+      <div
+
+        className={
+
+          sidebarOpen
+
+          ?
+
+          "sidebar-wrapper open"
+
+          :
+
+          "sidebar-wrapper"
+
+        }
+
+      >
+
+
+        <Sidebar
+
+
+          onNewChat={()=>{
+
+            newChat();
+
+            setSidebarOpen(false);
+
+          }}
+
+
+          onSelectChat={(chat)=>{
+
+            openChat(chat);
+
+            setSidebarOpen(false);
+
+          }}
+
+
+
+          onClose={()=>setSidebarOpen(false)}
+
+
+        />
+
+
+      </div>
+
+
+
+
 
 
 
       <div className="chat-area">
+
+
+
+        <Header
+
+          openSidebar={()=>setSidebarOpen(true)}
+
+        />
+
+
+
 
 
 
@@ -423,28 +657,28 @@ export default function ChatLayout(){
 
           loading={loading}
 
+          stopGenerating={stopGenerating}
+
+          regenerate={regenerate}
+
         />
+
+
 
 
 
 
         <InputBox
 
-
           message={message}
-
 
           setMessage={setMessage}
 
-
           sendMessage={sendMessage}
-
 
           selectedFile={selectedFile}
 
-
           setSelectedFile={setSelectedFile}
-
 
         />
 
@@ -453,8 +687,10 @@ export default function ChatLayout(){
       </div>
 
 
+
     </div>
 
   );
+
 
 }

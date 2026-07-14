@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react";
+
 import { getHistory } from "../services/api";
 
+import logo from "../assets/logo.png";
 
-export default function Sidebar({ onSelectChat, onNewChat }) {
 
 
-  const [history, setHistory] = useState([]);
+export default function Sidebar({
+
+  onSelectChat,
+
+  onNewChat,
+
+  onClose
+
+}) {
+
+
+
+  const [history,setHistory] = useState([]);
 
 
 
   const user = JSON.parse(
+
     localStorage.getItem("user")
+
   );
 
 
@@ -20,7 +35,10 @@ export default function Sidebar({ onSelectChat, onNewChat }) {
 
 
 
+
+
   useEffect(()=>{
+
 
     if(user_id){
 
@@ -28,7 +46,10 @@ export default function Sidebar({ onSelectChat, onNewChat }) {
 
     }
 
+
   },[]);
+
+
 
 
 
@@ -41,29 +62,31 @@ export default function Sidebar({ onSelectChat, onNewChat }) {
     try{
 
 
-      const data = await getHistory(
-        user_id
-      );
+      const data = await getHistory(user_id);
 
 
 
       if(data.success){
 
-        setHistory(
-          data.history
-        );
+
+        setHistory(data.history);
+
 
       }
 
 
 
     }
+
     catch(error){
 
 
       console.log(
+
         "History Error:",
+
         error
+
       );
 
 
@@ -77,23 +100,88 @@ export default function Sidebar({ onSelectChat, onNewChat }) {
 
 
 
+
+
   return (
+
+
 
     <div className="sidebar">
 
 
 
+
+
+
+      <div className="sidebar-brand">
+
+
+
+        <img
+
+          src={logo}
+
+          className="sidebar-logo"
+
+          alt="CodeSathi"
+
+        />
+
+
+
+        <h2>
+
+          CodeSathi AI
+
+        </h2>
+
+
+
+
+
+        <button
+
+          className="close-sidebar"
+
+          onClick={onClose}
+
+        >
+
+          ✕
+
+        </button>
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
       <button
+
 
         className="new-chat-btn"
 
+
         onClick={onNewChat}
+
 
       >
 
-        + New Chat
+        ＋ New Chat
+
 
       </button>
+
+
+
 
 
 
@@ -103,60 +191,105 @@ export default function Sidebar({ onSelectChat, onNewChat }) {
       <div className="history">
 
 
+
         <h3>
-          Chat History
+
+          Recent Chats
+
         </h3>
+
+
+
 
 
 
 
         {
 
-          history.length === 0 ? (
+          history.length===0
+
+          ?
 
 
-            <p>
+          (
+
+            <p className="empty">
+
               No chats yet
+
             </p>
-
-
-
-          ) : (
-
-
-            history.map((chat)=>(
-
-
-              <div
-
-                key={chat.id}
-
-                className="history-item"
-
-                onClick={()=>onSelectChat(chat)}
-
-              >
-
-
-                💬 {chat.user_message.slice(0,30)}
-
-
-              </div>
-
-
-            ))
 
 
           )
 
+
+
+          :
+
+
+
+          history.map((chat)=>(
+
+
+            <div
+
+
+              key={chat.id}
+
+
+              className="history-item"
+
+
+
+              onClick={()=>onSelectChat(chat)}
+
+
+            >
+
+
+
+              💬 {
+
+
+                chat.user_message
+
+                ?
+
+                chat.user_message.slice(0,35)
+
+                :
+
+                "New Conversation"
+
+
+              }
+
+
+
+
+            </div>
+
+
+
+          ))
+
+
+
         }
+
 
 
 
       </div>
 
 
+
+
+
+
     </div>
+
+
 
   );
 

@@ -2,11 +2,17 @@ import { useRef } from "react";
 
 
 export default function InputBox({
+
   message,
+
   setMessage,
+
   sendMessage,
+
   setSelectedFile,
+
   selectedFile
+
 }) {
 
 
@@ -14,9 +20,11 @@ export default function InputBox({
 
 
 
+
   function handleFile(e){
 
-    const file = e.target.files[0];
+
+    const file=e.target.files[0];
 
 
     if(file){
@@ -25,87 +33,178 @@ export default function InputBox({
 
     }
 
+
   }
+
+
+
+
+
+
+  function handleSend(){
+
+
+    if(!message.trim() && !selectedFile){
+
+      return;
+
+    }
+
+
+    sendMessage();
+
+
+  }
+
+
+
 
 
 
   return (
 
-    <div className="input-area">
 
 
-      {/* Plus Button */}
-
-      <button
-
-        className="attach-btn"
-
-        onClick={() => fileRef.current.click()}
-
-      >
-
-        +
-
-      </button>
+    <div className="input-wrapper">
 
 
 
-
-      <input
-
-        ref={fileRef}
-
-        type="file"
-
-        style={{display:"none"}}
-
-        accept=".pdf,.xlsx,.xls,.csv,.png,.jpg,.jpeg"
-
-        onChange={handleFile}
-
-      />
+      <div className="input-area">
 
 
 
 
 
 
-      <input
-
-        type="text"
-
-        placeholder="Ask CodeSathi AI anything..."
-
-        value={message}
-
-        onChange={(e)=>setMessage(e.target.value)}
+        <button
 
 
-        onKeyDown={(e)=>{
+          className="attach-btn"
 
-          if(e.key==="Enter"){
 
-            sendMessage();
+          onClick={()=>fileRef.current.click()}
 
-          }
 
-        }}
+          title="Attach file"
 
-      />
+
+        >
+
+          📎
+
+
+        </button>
 
 
 
 
 
-      <button
 
-        onClick={sendMessage}
+        <input
 
-      >
 
-        Send
+          ref={fileRef}
 
-      </button>
+
+          type="file"
+
+
+          hidden
+
+
+          accept=".pdf,.xlsx,.xls,.csv,.png,.jpg,.jpeg,.txt,.py,.js"
+
+
+          onChange={handleFile}
+
+
+        />
+
+
+
+
+
+
+
+
+        <textarea
+
+
+          className="chat-input"
+
+
+          placeholder="Ask CodeSathi AI anything..."
+
+
+          value={message}
+
+
+
+          rows="1"
+
+
+
+          onChange={(e)=>setMessage(e.target.value)}
+
+
+
+
+
+
+          onKeyDown={(e)=>{
+
+
+            if(e.key==="Enter" && !e.shiftKey){
+
+
+              e.preventDefault();
+
+
+              handleSend();
+
+
+            }
+
+
+          }}
+
+
+
+        />
+
+
+
+
+
+
+
+        <button
+
+
+          className="send-btn"
+
+
+          onClick={handleSend}
+
+
+        >
+
+          🚀
+
+
+        </button>
+
+
+
+
+
+
+      </div>
+
+
+
+
+
 
 
 
@@ -113,19 +212,53 @@ export default function InputBox({
 
         selectedFile && (
 
+
+
           <div className="selected-file">
 
-            📎 {selectedFile.name}
+
+            <span>
+
+              📎 {selectedFile.name}
+
+            </span>
+
+
+
+
+
+            <button
+
+
+              className="remove-file"
+
+
+              onClick={()=>setSelectedFile(null)}
+
+            >
+
+              ✕
+
+            </button>
+
+
+
 
           </div>
 
+
         )
+
 
       }
 
 
+
     </div>
 
+
+
   );
+
 
 }

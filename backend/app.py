@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from services.ai_service import generate_response
+from services.ai_service import (
+    generate_response,
+    generate_healthcare_response
+)
 
 from routes.upload import upload_bp
 from routes.auth import auth_bp
@@ -34,11 +37,15 @@ with app.app_context():
 
 
 
+
+
 # Routes
 
 app.register_blueprint(upload_bp)
 
 app.register_blueprint(auth_bp)
+
+
 
 
 
@@ -53,6 +60,9 @@ def home():
         "status":"Running"
 
     })
+
+
+
 
 
 
@@ -74,10 +84,18 @@ def chat():
         user_id = data.get("user_id")
 
 
+
         message = data.get(
             "message",
             ""
         ).strip()
+
+
+
+        mode = data.get(
+            "mode",
+            "coding"
+        )
 
 
 
@@ -88,7 +106,10 @@ def chat():
 
 
 
+
+
         if not user_id:
+
 
             return jsonify({
 
@@ -101,7 +122,11 @@ def chat():
 
 
 
+
+
+
         if not message:
+
 
             return jsonify({
 
@@ -114,59 +139,112 @@ def chat():
 
 
 
-        ai_reply = generate_response(
 
-            message,
 
-            uploaded_file
 
-        )
+        # AI MODE SELECT
+
+
+        if mode == "healthcare":
+
+
+            ai_reply = generate_healthcare_response(
+
+                message
+
+            )
+
+
+
+        else:
+
+
+            ai_reply = generate_response(
+
+                message,
+
+                uploaded_file
+
+            )
+
+
+
+
+
 
 
 
 
         new_chat = ChatHistory(
 
+
             user_id=user_id,
+
 
             user_message=message,
 
+
             ai_response=ai_reply
+
 
         )
 
 
 
+
+
         db.session.add(new_chat)
+
 
         db.session.commit()
 
 
 
 
+
+
+
         return jsonify({
+
 
             "success":True,
 
+
             "reply":ai_reply
 
+
         })
+
+
+
+
 
 
 
     except Exception as e:
 
 
+
         print("CHAT ERROR:",e)
+
 
 
         return jsonify({
 
+
             "success":False,
+
 
             "message":str(e)
 
+
         }),500
+
+
+
+
+
+
 
 
 
@@ -183,13 +261,17 @@ def history():
     try:
 
 
+
         user_id = request.args.get(
             "user_id"
         )
 
 
 
+
+
         if not user_id:
+
 
             return jsonify({
 
@@ -202,15 +284,24 @@ def history():
 
 
 
+
+
+
         chats = ChatHistory.query.filter_by(
+
 
             user_id=user_id
 
+
         ).order_by(
+
 
             ChatHistory.created_at.desc()
 
+
         ).all()
+
+
 
 
 
@@ -219,31 +310,49 @@ def history():
 
 
 
+
+
         for chat in chats:
+
 
 
             data.append({
 
+
                 "id":chat.id,
+
 
                 "user_message":chat.user_message,
 
+
                 "ai_response":chat.ai_response,
 
+
                 "created_at":str(chat.created_at)
+
 
             })
 
 
 
 
+
+
+
         return jsonify({
+
 
             "success":True,
 
+
             "history":data
 
+
         })
+
+
+
+
 
 
 
@@ -251,16 +360,25 @@ def history():
     except Exception as e:
 
 
+
         print("HISTORY ERROR:",e)
+
 
 
         return jsonify({
 
+
             "success":False,
+
 
             "message":str(e)
 
+
         }),500
+
+
+
+
 
 
 
