@@ -7,11 +7,13 @@ google-genai
 werkzeug
 gunicorn
 
+
 # File Reading
 pypdf
 python-docx
 openpyxl
 pandas
+PyPDF2==3.0.1
 
 # Image Support
 pillow
