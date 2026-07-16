@@ -1,559 +1,542 @@
 import { Link } from "react-router-dom";
 import AIAvatar from "../components/AIAvatar";
+import "./Landing.css";
 
+export default function Landing() {
+  return (
+    <div className="landing">
 
-export default function Landing(){
+      {/* Aurora Background */}
 
+      <div className="aurora">
+        <span className="orb orb-a"></span>
+        <span className="orb orb-b"></span>
+        <span className="orb orb-c"></span>
+      </div>
 
-return(
+      {/* Grid */}
 
+      <div className="grid-bg"></div>
 
-<div className="landing">
+      {/* Navigation */}
 
+      <nav className="landing-nav">
 
+        <div className="brand">
 
-<div className="particles">
+          <div className="brand-logo">
+            ⚡
+          </div>
 
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
+          <div>
 
-</div>
+            <h2>CodeSathi AI</h2>
 
+            <small>AI Workspace</small>
 
+          </div>
 
+        </div>
 
+        <div className="nav-links">
 
-<nav className="landing-nav">
+          <Link to="/login">
+            Login
+          </Link>
 
+          <Link
+            to="/signup"
+            className="nav-start"
+          >
+            Launch App
+          </Link>
 
-<div className="brand">
+        </div>
 
-🤖
+      </nav>
 
-<h2>
+      {/* Hero */}
 
-CodeSathi AI
+      <section className="hero">
 
-</h2>
+        <div className="hero-content">
 
-</div>
+          <div className="hero-chip">
 
+            <span className="live-dot"></span>
 
+            AI Workspace v2.0
 
+          </div>
 
+          <h1>
 
-<div className="nav-links">
+            Build
 
+            <span> Smarter.</span>
 
-<Link to="/login">
+            <br />
 
-Login
+            Ship
 
-</Link>
+            <span> Faster.</span>
 
+          </h1>
 
+          <p className="hero-text">
 
-<Link
+            CodeSathi AI is an intelligent workspace for
+            developers and healthcare professionals.
 
-to="/signup"
+            Generate code, debug projects, analyze files,
+            understand medical concepts and build products
+            from one beautiful AI platform.
 
-className="nav-start"
+          </p>
 
->
+          <div className="hero-buttons">
 
-Get Started
+            <Link
+              to="/signup"
+              className="primary-btn"
+            >
+              Start Free →
+            </Link>
 
-</Link>
+            <Link
+              to="/login"
+              className="secondary-btn"
+            >
+              Live Demo
+            </Link>
 
+          </div>
 
-</div>
+          <div className="hero-stats">
 
+            <div className="stat-card">
 
-</nav>
+              <h2>100K+</h2>
 
+              <span>AI Responses</span>
 
+            </div>
 
+            <div className="stat-card">
 
+              <h2>98%</h2>
 
+              <span>Accuracy</span>
 
+            </div>
 
+            <div className="stat-card">
 
+              <h2>24×7</h2>
 
-<section className="hero">
+              <span>Always Ready</span>
 
+            </div>
 
+          </div>
 
+        </div>
 
+        {/* Right */}
 
-<div className="hero-content">
+        <div className="hero-dashboard">
 
+          <div className="dashboard glass">
 
+            <div className="dashboard-top">
 
-<p className="badge">
+              <div className="traffic">
 
-🚀 AI Powered Assistant
+                <span className="red"></span>
+                <span className="yellow"></span>
+                <span className="green"></span>
 
-</p>
+              </div>
 
+              <span className="dashboard-title">
 
+                CodeSathi Workspace
 
+              </span>
 
+            </div>
 
-<h1>
+            <AIAvatar />
 
+            <div className="dashboard-card">
 
-Build Faster With
+              <div>
 
+                🤖 AI Assistant
 
-<span>
+              </div>
 
- CodeSathi AI
+              <span>Online</span>
 
-</span>
+            </div>
 
+            <div className="dashboard-card">
 
-</h1>
+              <div>
 
+                💻 Coding Mode
 
+              </div>
 
+              <span>Active</span>
 
+            </div>
 
+            <div className="dashboard-card">
 
-<p className="hero-text">
+              <div>
 
+                🩺 Healthcare
 
-Your AI coding and healthcare companion that helps you
-build projects and explore knowledge in Hinglish.
+              </div>
 
+              <span>Ready</span>
 
-</p>
+            </div>
 
+            <button className="dashboard-btn">
 
+              Open Workspace →
 
+            </button>
 
+          </div>
 
+        </div>
 
-<div className="hero-buttons">
+      </section>
 
+            {/* FEATURES */}
 
-<Link
+      <section className="features">
 
-to="/signup"
+        <div className="section-title">
 
-className="primary-btn"
+          <span>POWERFUL FEATURES</span>
 
->
+          <h2>
+            Everything You Need In One AI Platform
+          </h2>
 
-Start Building 🚀
+          <p>
+            Modern tools built for developers, students and professionals.
+          </p>
 
-</Link>
+        </div>
 
+        <div className="feature-grid">
 
+          <div className="feature-card">
 
+            <div className="feature-icon">💻</div>
 
-<Link
+            <h3>AI Code Generation</h3>
 
-to="/login"
+            <p>
+              Generate complete applications in React,
+              Node.js, Python, Java, C++, PHP and many
+              more languages.
+            </p>
 
-className="secondary-btn"
+          </div>
 
->
+          <div className="feature-card">
 
-Login
+            <div className="feature-icon">⚡</div>
 
-</Link>
+            <h3>Instant Debugging</h3>
 
+            <p>
+              Find bugs, improve performance and optimize
+              your code automatically.
+            </p>
 
+          </div>
 
-</div>
+          <div className="feature-card">
 
+            <div className="feature-icon">🧠</div>
 
+            <h3>AI Memory</h3>
 
+            <p>
+              Continue previous chats and work on large
+              projects without losing context.
+            </p>
 
+          </div>
 
-<div className="stats">
+          <div className="feature-card">
 
+            <div className="feature-icon">📂</div>
 
-<div>
+            <h3>File Analysis</h3>
 
-<h2>
+            <p>
+              Upload PDF, Images, Excel, CSV, ZIP,
+              JavaScript, Python and more.
+            </p>
 
-10x
+          </div>
 
-</h2>
+          <div className="feature-card">
 
-<p>
+            <div className="feature-icon">🩺</div>
 
-Faster Coding
+            <h3>Healthcare AI</h3>
 
-</p>
+            <p>
+              Learn medical concepts, diseases,
+              medicines and healthcare topics
+              with AI assistance.
+            </p>
 
-</div>
+          </div>
 
+          <div className="feature-card">
 
+            <div className="feature-icon">🚀</div>
 
-<div>
+            <h3>Project Builder</h3>
 
-<h2>
+            <p>
+              Build complete full-stack projects,
+              APIs and SaaS applications faster.
+            </p>
 
-24/7
+          </div>
 
-</h2>
+        </div>
 
-<p>
+      </section>
 
-AI Support
+      {/* WHY */}
 
-</p>
+      <section className="why-section">
 
-</div>
+        <div className="section-title">
 
+          <span>WHY CODESATHI</span>
 
+          <h2>
+            Built For The Next Generation
+          </h2>
 
-<div>
+        </div>
 
-<h2>
+        <div className="why-grid">
 
-🩺
+          <div className="why-card">
 
-</h2>
+            <h3>⚡ Lightning Fast</h3>
 
-<p>
+            <p>
+              Optimized responses with premium UI.
+            </p>
 
-Healthcare
+          </div>
 
-</p>
+          <div className="why-card">
 
-</div>
+            <h3>🔒 Secure Workspace</h3>
 
+            <p>
+              Your conversations stay organized and protected.
+            </p>
 
-</div>
+          </div>
 
+          <div className="why-card">
 
+            <h3>🌍 Multi Purpose</h3>
 
-</div>
+            <p>
+              Coding + Healthcare + AI Productivity
+              inside one application.
+            </p>
 
+          </div>
 
+        </div>
 
+      </section>
 
 
+            {/* WORKFLOW */}
 
+      <section className="workflow">
 
+        <div className="section-title">
 
+          <span>WORKFLOW</span>
 
-<div className="hero-card">
+          <h2>Three Steps To Build Anything</h2>
 
+          <p>
+            Simple, fast and powerful AI workflow.
+          </p>
 
+        </div>
 
-<AIAvatar/>
+        <div className="workflow-grid">
 
+          <div className="workflow-card">
 
+            <div className="step-number">
+              01
+            </div>
 
+            <h3>
+              Ask Anything
+            </h3>
 
-<h3>
+            <p>
+              Type your coding question,
+              upload files or ask healthcare
+              related queries.
+            </p>
 
-CodeSathi AI
+          </div>
 
-</h3>
+          <div className="workflow-card">
 
+            <div className="step-number">
+              02
+            </div>
 
-<p>
+            <h3>
+              AI Understands
+            </h3>
 
-Code assistant + Healthcare knowledge assistant.
+            <p>
+              CodeSathi AI analyzes your
+              request and generates intelligent,
+              optimized responses instantly.
+            </p>
 
-</p>
+          </div>
 
+          <div className="workflow-card">
 
+            <div className="step-number">
+              03
+            </div>
 
-<div className="glow"></div>
+            <h3>
+              Build Faster
+            </h3>
 
+            <p>
+              Copy code, continue chatting,
+              improve projects and save hours
+              of development time.
+            </p>
 
-</div>
+          </div>
 
+        </div>
 
+      </section>
 
+      {/* CTA */}
 
+      <section className="cta-section">
 
-</section>
+        <div className="cta-card glass">
 
+          <span className="cta-tag">
+            🚀 READY TO START?
+          </span>
 
+          <h2>
 
+            Experience The Future Of
 
+            <span> AI Workspace</span>
 
+          </h2>
 
+          <p>
 
+            One platform for Coding,
+            Healthcare, Automation,
+            Learning and Productivity.
 
+          </p>
 
-<section className="features">
+          <div className="hero-buttons">
 
+            <Link
+              to="/signup"
+              className="primary-btn"
+            >
+              Create Free Account
+            </Link>
 
+            <Link
+              to="/login"
+              className="secondary-btn"
+            >
+              Sign In
+            </Link>
 
-<h2>
+          </div>
 
-Powerful AI Features
+        </div>
 
-</h2>
+      </section>
 
+      {/* FOOTER */}
 
+      <footer className="landing-footer">
 
+        <div className="footer-brand">
 
+          <h2>
+            ⚡ CodeSathi AI
+          </h2>
 
-<div className="feature-grid">
+          <p>
+            Build Faster. Learn Smarter.
+          </p>
 
+        </div>
 
+        <div className="footer-links">
 
-<div className="feature-card">
+          <Link to="/login">
+            Login
+          </Link>
 
+          <Link to="/signup">
+            Sign Up
+          </Link>
 
-<h3>
+          <Link to="/healthcare">
+            Healthcare
+          </Link>
 
-💻 Code Generation
+        </div>
 
-</h3>
+        <div className="footer-copy">
 
+          © 2026 CodeSathi AI.
+          All Rights Reserved.
 
-<p>
+        </div>
 
-Create HTML, Python, JavaScript and more with AI.
+      </footer>
 
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div className="feature-card">
-
-
-<h3>
-
-🐛 Debug Assistant
-
-</h3>
-
-
-<p>
-
-Find coding errors and get solutions quickly.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div className="feature-card">
-
-
-<h3>
-
-🧠 AI Memory
-
-</h3>
-
-
-<p>
-
-Continue conversations and improve workflow.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div className="feature-card healthcare-card">
-
-
-<h3>
-
-🩺 Healthcare AI
-
-</h3>
-
-
-<p>
-
-Explore medicine information, diseases,
-medical terms and healthcare knowledge.
-
-</p>
-
-
-
-
-<Link
-
-to="/healthcare"
-
-className="feature-btn"
-
->
-
-Explore Health →
-
-</Link>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section className="workflow">
-
-
-<h2>
-
-How CodeSathi Works
-
-</h2>
-
-
-
-<div>
-
-<span>
-
-1
-
-</span>
-
-Ask your question
-
-
-</div>
-
-
-
-<div>
-
-<span>
-
-2
-
-</span>
-
-AI understands and responds
-
-
-</div>
-
-
-
-
-<div>
-
-<span>
-
-3
-
-</span>
-
-Build and learn faster
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section className="cta">
-
-
-<h2>
-
-One AI for Coding + Healthcare Knowledge
-
-</h2>
-
-
-
-<Link
-
-to="/signup"
-
-className="primary-btn"
-
->
-
-Join CodeSathi AI 🚀
-
-</Link>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<footer>
-
-
-<p>
-
-© 2026 CodeSathi AI. Built with ❤️
-
-</p>
-
-
-</footer>
-
-
-
-
-
-
-
-</div>
-
-
-);
-
-
+    </div>
+  );
 }

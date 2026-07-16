@@ -1,248 +1,46 @@
-import { Canvas } from "@react-three/fiber";
-import {
-  Float,
-  Environment,
-  OrbitControls
-} from "@react-three/drei";
+import React, { useEffect, useRef } from 'react';
+import { useGLTF, useAnimations } from '@react-three/drei';
 
-import "./Avatar3D.css";
+export default function Avatar3D() {
+  const group = useRef();
+  
+  try {
+    // मॉडल लोड करने की कोशिश करें
+    const { scene, animations } = useGLTF('/avatars/male.glb', true);
+    const { actions, names } = useAnimations(animations, group);
 
+    useEffect(() => {
+      if (names && names.length > 0 && actions) {
+        const defaultAction = actions[names[0]];
+        if (defaultAction) {
+          defaultAction.reset().fadeIn(0.5).play();
+        }
+      }
+      return () => {
+        if (names && names.length > 0 && actions && actions[names[0]]) {
+          actions[names[0]].fadeOut(0.5);
+        }
+      };
+    }, [actions, names]);
 
-function AIAvatar() {
+    return (
+      <group ref={group} dispose={null} position={[0, -1, 0]} scale={[1.1, 1.1, 1.1]}>
+        <primitive object={scene} />
+      </group>
+    );
 
-  return (
-
-    <group>
-
-
-      {/* Head */}
-
-      <mesh
-        position={[0, 1.2, 0]}
-      >
-
-        <sphereGeometry
-          args={[0.45, 64, 64]}
-        />
-
-
-        <meshStandardMaterial
-
-          color="#60a5fa"
-
-          emissive="#2563eb"
-
-          emissiveIntensity={3}
-
-          transparent
-
-          opacity={0.85}
-
-        />
-
-
+  } catch (error) {
+    console.error("3D Model loading failed, showing fallback cube:", error);
+    
+    // अगर मॉडल लोड न हो, तो क्रैश होने के बजाय यह सुंदर 3D नियॉन क्यूब दिखाएगा
+    return (
+      <mesh position={[0, 0, 0]} rotation={[0.5, 0.5, 0]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="#3b82f6" roughness={0.1} metalness={0.8} />
       </mesh>
-
-
-
-      {/* Body */}
-
-      <mesh
-        position={[0, 0, 0]}
-      >
-
-        <capsuleGeometry
-          args={[
-            0.5,
-            1.2,
-            32,
-            64
-          ]}
-        />
-
-
-        <meshStandardMaterial
-
-          color="#9333ea"
-
-          emissive="#7c3aed"
-
-          emissiveIntensity={3}
-
-          transparent
-
-          opacity={0.55}
-
-        />
-
-
-      </mesh>
-
-
-
-      {/* Core Energy */}
-
-      <mesh
-        position={[0,0,0.45]}
-      >
-
-        <sphereGeometry
-          args={[0.12,32,32]}
-        />
-
-
-        <meshStandardMaterial
-
-          color="#22d3ee"
-
-          emissive="#22d3ee"
-
-          emissiveIntensity={5}
-
-        />
-
-
-      </mesh>
-
-
-
-      {/* Energy Ring */}
-
-      <mesh
-        rotation={[
-          Math.PI / 2,
-          0,
-          0
-        ]}
-      >
-
-        <torusGeometry
-          args={[
-            1,
-            0.025,
-            32,
-            100
-          ]}
-        />
-
-
-        <meshStandardMaterial
-
-          color="#38bdf8"
-
-          emissive="#38bdf8"
-
-          emissiveIntensity={5}
-
-        />
-
-
-      </mesh>
-
-
-    </group>
-
-  );
-
+    );
+  }
 }
 
-
-
-export default function Avatar3D(){
-
-
-  return (
-
-    <div className="avatar-container">
-
-
-      <Canvas
-
-        camera={{
-          position:[
-            0,
-            0.5,
-            4
-          ],
-
-          fov:45
-
-        }}
-
-      >
-
-
-        <ambientLight
-          intensity={1}
-        />
-
-
-
-        <directionalLight
-
-          position={[
-            3,
-            4,
-            3
-          ]}
-
-          intensity={3}
-
-        />
-
-
-
-        <pointLight
-
-          position={[
-            0,
-            2,
-            2
-          ]}
-
-          color="#60a5fa"
-
-          intensity={5}
-
-        />
-
-
-
-        <Float
-
-          speed={2}
-
-          floatIntensity={0.8}
-
-          rotationIntensity={0.3}
-
-        >
-
-          <AIAvatar />
-
-        </Float>
-
-
-
-        <Environment
-          preset="city"
-        />
-
-
-        <OrbitControls
-
-          enableZoom={false}
-
-          enablePan={false}
-
-        />
-
-
-      </Canvas>
-
-
-    </div>
-
-  );
-
-}
+// इसे अभी के लिए कमेंट कर देते हैं ताकि अगर फाइल न हो तो ये क्रैश न करे
+// useGLTF.preload('/avatars/male.glb');

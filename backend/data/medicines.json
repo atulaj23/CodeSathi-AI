@@ -1,0 +1,29 @@
+{
+  "paracetamol": {
+    "name": "Paracetamol",
+    "use": "Fever aur mild pain ke liye commonly use hoti hai.",
+    "category": "Pain reliever / Fever reducer",
+    "precaution": "Liver problem wale patients doctor se advice lein."
+  },
+
+  "ibuprofen": {
+    "name": "Ibuprofen",
+    "use": "Pain aur inflammation me use hoti hai.",
+    "category": "NSAID pain reliever",
+    "precaution": "Stomach ulcer, kidney problem ya blood thinner lene wale doctor se consult karein."
+  },
+
+  "cetirizine": {
+    "name": "Cetirizine",
+    "use": "Allergy symptoms jaise sneezing, itching me help kar sakti hai.",
+    "category": "Antihistamine",
+    "precaution": "Neend aa sakti hai, driving me caution rakhein."
+  },
+
+  "omeprazole": {
+    "name": "Omeprazole",
+    "use": "Acidity aur stomach acid related problems me use hoti hai.",
+    "category": "Acid reducer",
+    "precaution": "Long term use doctor advice se karein."
+  }
+}

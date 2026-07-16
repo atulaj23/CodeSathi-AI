@@ -1,203 +1,404 @@
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Scene3D from "../components/Scene3D";
 import { loginUser } from "../services/api";
-
 
 export default function Login() {
 
   const navigate = useNavigate();
 
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
 
-  const [email, setEmail] = useState("");
+  const [error,setError]=useState("");
+  const [loading,setLoading]=useState(false);
 
-  const [password, setPassword] = useState("");
-
-  const [error, setError] = useState("");
-
-
-
-  const handleLogin = async () => {
-
+  async function handleLogin(){
 
     setError("");
+    setLoading(true);
 
+    try{
 
-
-    try {
-
-
-      const data = await loginUser({
+      const data=await loginUser({
 
         email,
-
         password
 
       });
 
-
-
       if(data.success){
 
-
-        // save user info
-
         localStorage.setItem(
+
           "user",
+
           JSON.stringify(data.user)
+
         );
-
-
 
         navigate("/chat");
 
+      }
 
-      } 
-      else {
-
+      else{
 
         setError(
-          data.message || "Login failed"
-        );
 
+          data.message ||
+
+          "Invalid email or password."
+
+        );
 
       }
 
+    }
 
-
-    } catch(error){
-
+    catch(error){
 
       console.log(error);
 
-
       setError(
-        "Server error. Backend check karo."
-      );
 
+        "Unable to connect to server."
+
+      );
 
     }
 
+    finally{
 
-  };
+      setLoading(false);
 
+    }
 
+  }
 
+  return(
 
+<div className="login-page">
 
-  return (
+<div className="bg-blur blur1"></div>
 
-    <div className="login-page">
+<div className="bg-blur blur2"></div>
 
+<div className="bg-grid"></div>
 
-      <div className="bg-blur blur1"></div>
+{/* LEFT */}
 
-      <div className="bg-blur blur2"></div>
+<div className="ai-showcase">
 
+<div className="ai-core">
 
+<div className="ring ring1"></div>
 
+<div className="ring ring2"></div>
 
-      <div className="robot-area">
+<div className="ring ring3"></div>
 
-        <Scene3D />
+<div className="core-icon">
 
-      </div>
+✨
 
+</div>
 
+</div>
 
+<div className="showcase-text">
 
+<p className="ai-badge">
 
-      <div className="login-card">
+NEXT GENERATION AI
 
+</p>
 
-        <h1>
-          🤖 CodeSathi AI
-        </h1>
+<h1>
 
+Welcome To
 
-        <p>
-          Your Intelligent Coding Partner
-        </p>
+<span>
 
+ CodeSathi AI
 
+</span>
 
+</h1>
 
-        <input
+<p className="show-desc">
 
-          type="email"
+One intelligent workspace for
 
-          placeholder="Email"
+Coding,
 
-          value={email}
+Healthcare,
 
-          onChange={(e)=>setEmail(e.target.value)}
+Debugging,
 
-        />
+Report Analysis,
 
+and AI Productivity.
 
+</p>
 
+</div>
 
-        <input
+<div className="feature-list">
 
-          type="password"
+<div className="feature-item">
 
-          placeholder="Password"
+<div className="feature-icon">
 
-          value={password}
+⚡
 
-          onChange={(e)=>setPassword(e.target.value)}
+</div>
 
-        />
+<div>
 
+<h3>
 
+Ultra Fast AI
 
+</h3>
 
-        {
-          error && (
+<p>
 
-            <p className="error">
-              {error}
-            </p>
+Lightning-fast intelligent responses.
 
-          )
-        }
+</p>
 
+</div>
 
+</div>
 
+<div className="feature-item">
 
+<div className="feature-icon">
 
-        <button onClick={handleLogin}>
+💻
 
-          Login
+</div>
 
-        </button>
+<div>
 
+<h3>
 
+Coding Assistant
 
+</h3>
 
+<p>
 
-        <span>
+Generate, explain and debug code.
 
-          Don't have an account?{" "}
+</p>
 
-          <Link to="/signup">
+</div>
 
-            Sign Up
+</div>
 
-          </Link>
+<div className="feature-item">
 
+<div className="feature-icon">
 
-        </span>
+🩺
 
+</div>
 
+<div>
 
-      </div>
+<h3>
 
+Healthcare AI
 
+</h3>
 
-    </div>
+<p>
 
-  );
+Medical knowledge and report guidance.
+
+</p>
+
+</div>
+
+</div>
+
+<div className="feature-item">
+
+<div className="feature-icon">
+
+🔒
+
+</div>
+
+<div>
+
+<h3>
+
+Secure Workspace
+
+</h3>
+
+<p>
+
+Private conversations and cloud history.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{/* LOGIN CARD */}
+
+<div className="login-card">
+
+<div className="login-top">
+
+<div className="login-logo">
+
+🤖
+
+</div>
+
+<h2>
+
+Welcome Back
+
+</h2>
+
+<p>
+
+Login to continue your AI workspace.
+
+</p>
+
+</div>
+
+{
+
+error &&
+
+<div className="error-box">
+
+⚠️ {error}
+
+</div>
+
+}
+
+<div className="input-group">
+
+<label>
+
+Email Address
+
+</label>
+
+<input
+
+type="email"
+
+placeholder="Enter your email"
+
+value={email}
+
+onChange={(e)=>setEmail(e.target.value)}
+
+/>
+
+</div>
+
+<div className="input-group">
+
+<label>
+
+Password
+
+</label>
+
+<input
+
+type="password"
+
+placeholder="Enter your password"
+
+value={password}
+
+onChange={(e)=>setPassword(e.target.value)}
+
+/>
+
+</div>
+
+<button
+
+className="login-btn"
+
+onClick={handleLogin}
+
+disabled={loading}
+
+>
+
+{
+
+loading
+
+?
+
+"Signing In..."
+
+:
+
+"Login"
+
+}
+
+</button>
+
+<div className="login-divider">
+
+<span>
+
+OR
+
+</span>
+
+</div>
+
+<p className="signup-text">
+
+Don't have an account?
+
+<Link
+
+to="/signup"
+
+className="signup-link"
+
+>
+
+Create Account
+
+</Link>
+
+</p>
+
+<div className="bottom-note">
+
+✨ Secure Login • AI Powered • Fast Access
+
+</div>
+
+</div>
+
+</div>
+
+);
 
 }

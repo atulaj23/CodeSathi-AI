@@ -1,0 +1,1203 @@
+/* ==========================================================
+        AI AVATAR
+        ULTRA PREMIUM
+        PART 1 / 4
+========================================================== */
+
+.ai-avatar{
+
+position:relative;
+
+width:340px;
+
+height:420px;
+
+margin:auto;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+animation:avatarFloat 6s ease-in-out infinite;
+
+}
+
+@keyframes avatarFloat{
+
+0%,100%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-18px);
+
+}
+
+}
+
+/* ===================================
+        MAIN GLOW
+=================================== */
+
+.avatar-glow{
+
+position:absolute;
+
+width:340px;
+
+height:340px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(0,217,255,.28),
+
+rgba(108,99,255,.18),
+
+transparent 72%
+
+);
+
+filter:blur(60px);
+
+animation:glowPulse 6s ease-in-out infinite;
+
+}
+
+@keyframes glowPulse{
+
+50%{
+
+transform:scale(1.12);
+
+opacity:.9;
+
+}
+
+}
+
+/* ===================================
+        ENERGY RINGS
+=================================== */
+
+.orbit{
+
+position:absolute;
+
+border-radius:50%;
+
+border:2px solid rgba(255,255,255,.08);
+
+}
+
+.orbit1{
+
+width:230px;
+
+height:230px;
+
+border-top-color:#00D9FF;
+
+animation:rotate1 10s linear infinite;
+
+}
+
+.orbit2{
+
+width:290px;
+
+height:290px;
+
+border-right-color:#6C63FF;
+
+animation:rotate2 16s linear infinite;
+
+}
+
+.orbit3{
+
+width:350px;
+
+height:350px;
+
+border-left-color:#00D18F;
+
+animation:rotate3 22s linear infinite;
+
+opacity:.8;
+
+}
+
+@keyframes rotate1{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+@keyframes rotate2{
+
+to{
+
+transform:rotate(-360deg);
+
+}
+
+}
+
+@keyframes rotate3{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* ===================================
+        ROBOT HEAD
+=================================== */
+
+.head{
+
+position:relative;
+
+width:170px;
+
+height:215px;
+
+border-radius:80px;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+#F6FAFF,
+
+#DDEBFF 55%,
+
+#BFD6F7
+
+);
+
+box-shadow:
+
+0 25px 80px rgba(0,217,255,.20),
+
+inset 0 2px 15px rgba(255,255,255,.9);
+
+overflow:hidden;
+
+z-index:10;
+
+}
+
+/* Glass Reflection */
+
+.head::before{
+
+content:"";
+
+position:absolute;
+
+top:10px;
+
+left:22px;
+
+width:55px;
+
+height:145px;
+
+border-radius:60px;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,.95),
+
+transparent
+
+);
+
+opacity:.55;
+
+transform:rotate(-8deg);
+
+}
+/* ==========================================================
+        AI AVATAR
+        ULTRA PREMIUM
+        PART 2 / 4
+========================================================== */
+
+/* ===================================
+        HALO
+=================================== */
+
+.halo{
+
+position:absolute;
+
+top:-20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:95px;
+
+height:18px;
+
+border-radius:50px;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+#00D9FF,
+#6C63FF,
+transparent
+);
+
+filter:blur(1px);
+
+box-shadow:
+
+0 0 30px #00D9FF,
+
+0 0 60px #6C63FF;
+
+animation:haloGlow 4s ease-in-out infinite;
+
+}
+
+@keyframes haloGlow{
+
+50%{
+
+transform:
+
+translateX(-50%)
+
+scaleX(1.2);
+
+opacity:.75;
+
+}
+
+}
+
+/* ===================================
+        HORNS
+=================================== */
+
+.horn{
+
+position:absolute;
+
+top:12px;
+
+width:10px;
+
+height:38px;
+
+border-radius:20px;
+
+background:
+
+linear-gradient(
+180deg,
+#00D9FF,
+#6C63FF
+);
+
+box-shadow:
+
+0 0 20px rgba(0,217,255,.6);
+
+}
+
+.horn.left{
+
+left:34px;
+
+transform:rotate(-25deg);
+
+}
+
+.horn.right{
+
+right:34px;
+
+transform:rotate(25deg);
+
+}
+
+/* ===================================
+        EYES
+=================================== */
+
+.eyes{
+
+position:absolute;
+
+top:72px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:36px;
+
+}
+
+.eye{
+
+width:18px;
+
+height:18px;
+
+border-radius:50%;
+
+background:#00F5FF;
+
+box-shadow:
+
+0 0 18px #00F5FF,
+
+0 0 45px rgba(0,245,255,.8);
+
+animation:blink 5s infinite;
+
+}
+
+@keyframes blink{
+
+0%,45%,100%{
+
+transform:scaleY(1);
+
+}
+
+48%{
+
+transform:scaleY(.08);
+
+}
+
+52%{
+
+transform:scaleY(1);
+
+}
+
+}
+
+/* ===================================
+      FACE SCANNER
+=================================== */
+
+.scanner{
+
+position:absolute;
+
+top:92px;
+
+left:20px;
+
+width:130px;
+
+height:2px;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+#00F5FF,
+transparent
+);
+
+box-shadow:
+
+0 0 15px #00F5FF;
+
+animation:scannerMove 3.5s ease-in-out infinite;
+
+}
+
+@keyframes scannerMove{
+
+0%{
+
+transform:translateY(-18px);
+
+opacity:0;
+
+}
+
+20%{
+
+opacity:1;
+
+}
+
+80%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(60px);
+
+opacity:0;
+
+}
+
+}
+
+/* ===================================
+        MOUTH
+=================================== */
+
+.mouth{
+
+position:absolute;
+
+bottom:56px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:55px;
+
+height:5px;
+
+border-radius:50px;
+
+background:#00D9FF;
+
+box-shadow:
+
+0 0 15px #00D9FF;
+
+}
+
+/* ===================================
+      CHIN LIGHT
+=================================== */
+
+.chin-light{
+
+position:absolute;
+
+bottom:24px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:72px;
+
+height:10px;
+
+border-radius:50px;
+
+background:
+
+linear-gradient(
+90deg,
+transparent,
+#6C63FF,
+transparent
+);
+
+filter:blur(1px);
+
+opacity:.9;
+
+}
+/* ==========================================================
+        AI AVATAR
+        ULTRA PREMIUM
+        PART 3 / 4
+========================================================== */
+
+/* ===================================
+        ENERGY CORE
+=================================== */
+
+.energy-core{
+
+position:absolute;
+
+bottom:18px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+
+circle,
+
+#ffffff,
+
+#00D9FF 35%,
+
+#6C63FF 70%,
+
+transparent
+
+);
+
+filter:blur(1px);
+
+box-shadow:
+
+0 0 35px #00D9FF,
+
+0 0 70px rgba(108,99,255,.6);
+
+animation:coreEnergy 4s ease-in-out infinite;
+
+z-index:2;
+
+}
+
+@keyframes coreEnergy{
+
+0%,100%{
+
+transform:
+
+translateX(-50%)
+
+scale(1);
+
+}
+
+50%{
+
+transform:
+
+translateX(-50%)
+
+scale(1.18);
+
+}
+
+}
+
+/* ===================================
+        FLOATING PARTICLES
+=================================== */
+
+.particle{
+
+position:absolute;
+
+border-radius:50%;
+
+background:#fff;
+
+box-shadow:
+
+0 0 15px #00D9FF;
+
+opacity:.85;
+
+}
+
+.p1{
+
+width:8px;
+
+height:8px;
+
+top:30px;
+
+left:40px;
+
+animation:floatParticle1 7s linear infinite;
+
+}
+
+.p2{
+
+width:6px;
+
+height:6px;
+
+right:35px;
+
+top:80px;
+
+animation:floatParticle2 8s linear infinite;
+
+}
+
+.p3{
+
+width:10px;
+
+height:10px;
+
+left:30px;
+
+bottom:60px;
+
+animation:floatParticle3 9s linear infinite;
+
+}
+
+.p4{
+
+width:7px;
+
+height:7px;
+
+right:25px;
+
+bottom:110px;
+
+animation:floatParticle4 6s linear infinite;
+
+}
+
+.p5{
+
+width:12px;
+
+height:12px;
+
+top:160px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+animation:floatParticle5 10s linear infinite;
+
+}
+
+@keyframes floatParticle1{
+
+50%{
+
+transform:
+
+translateY(-35px)
+
+translateX(20px);
+
+opacity:.3;
+
+}
+
+}
+
+@keyframes floatParticle2{
+
+50%{
+
+transform:
+
+translateY(40px)
+
+translateX(-18px);
+
+opacity:1;
+
+}
+
+}
+
+@keyframes floatParticle3{
+
+50%{
+
+transform:
+
+translateY(-25px)
+
+translateX(22px);
+
+opacity:.25;
+
+}
+
+}
+
+@keyframes floatParticle4{
+
+50%{
+
+transform:
+
+translateY(30px)
+
+translateX(-20px);
+
+opacity:.8;
+
+}
+
+}
+
+@keyframes floatParticle5{
+
+50%{
+
+transform:
+
+translateX(-50%)
+
+translateY(-45px)
+
+scale(1.5);
+
+opacity:.4;
+
+}
+
+}
+
+/* ===================================
+        FACE SHADOW
+=================================== */
+
+.head::after{
+
+content:"";
+
+position:absolute;
+
+left:0;
+
+right:0;
+
+bottom:0;
+
+height:70px;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+transparent,
+
+rgba(0,0,0,.12)
+
+);
+
+}
+/* ==========================================================
+        AI AVATAR
+        ULTRA PREMIUM
+        PART 4 / 4
+========================================================== */
+
+/* ===================================
+        HOVER EFFECT
+=================================== */
+
+.ai-avatar:hover .head{
+
+transform:
+
+translateY(-8px)
+
+scale(1.02);
+
+transition:.45s ease;
+
+}
+
+.ai-avatar:hover .orbit1{
+
+animation-duration:6s;
+
+}
+
+.ai-avatar:hover .orbit2{
+
+animation-duration:10s;
+
+}
+
+.ai-avatar:hover .orbit3{
+
+animation-duration:14s;
+
+}
+
+.ai-avatar:hover .energy-core{
+
+box-shadow:
+
+0 0 45px #00D9FF,
+
+0 0 90px #6C63FF,
+
+0 0 140px rgba(0,217,255,.55);
+
+}
+
+/* ===================================
+      EXTRA LIGHT PARTICLES
+=================================== */
+
+.ai-avatar::before{
+
+content:"";
+
+position:absolute;
+
+width:520px;
+
+height:520px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(255,255,255,.08),
+
+transparent 70%
+
+);
+
+filter:blur(90px);
+
+z-index:-2;
+
+animation:auraPulse 7s ease-in-out infinite;
+
+}
+
+@keyframes auraPulse{
+
+0%,100%{
+
+transform:scale(1);
+
+opacity:.45;
+
+}
+
+50%{
+
+transform:scale(1.12);
+
+opacity:.9;
+
+}
+
+}
+
+/* ===================================
+      HOLOGRAM SHIMMER
+=================================== */
+
+.head{
+
+overflow:hidden;
+
+}
+
+.head::before{
+
+animation:holoMove 5s linear infinite;
+
+}
+
+@keyframes holoMove{
+
+0%{
+
+transform:
+
+translateX(-60px)
+
+rotate(-8deg);
+
+opacity:.15;
+
+}
+
+50%{
+
+opacity:.55;
+
+}
+
+100%{
+
+transform:
+
+translateX(160px)
+
+rotate(-8deg);
+
+opacity:.15;
+
+}
+
+}
+
+/* ===================================
+      SHADOW
+=================================== */
+
+.ai-avatar::after{
+
+content:"";
+
+position:absolute;
+
+bottom:-22px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:180px;
+
+height:24px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+
+ellipse,
+
+rgba(0,0,0,.45),
+
+transparent 70%
+
+);
+
+filter:blur(10px);
+
+animation:shadowPulse 6s ease-in-out infinite;
+
+}
+
+@keyframes shadowPulse{
+
+0%,100%{
+
+transform:
+
+translateX(-50%)
+
+scaleX(1);
+
+opacity:.45;
+
+}
+
+50%{
+
+transform:
+
+translateX(-50%)
+
+scaleX(.82);
+
+opacity:.25;
+
+}
+
+}
+
+/* ===================================
+      RESPONSIVE
+=================================== */
+
+@media(max-width:768px){
+
+.ai-avatar{
+
+width:270px;
+
+height:330px;
+
+}
+
+.head{
+
+width:145px;
+
+height:185px;
+
+}
+
+.orbit1{
+
+width:190px;
+
+height:190px;
+
+}
+
+.orbit2{
+
+width:235px;
+
+height:235px;
+
+}
+
+.orbit3{
+
+width:285px;
+
+height:285px;
+
+}
+
+.energy-core{
+
+width:70px;
+
+height:70px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.ai-avatar{
+
+width:220px;
+
+height:280px;
+
+}
+
+.head{
+
+width:120px;
+
+height:155px;
+
+}
+
+.eyes{
+
+gap:26px;
+
+top:55px;
+
+}
+
+.eye{
+
+width:14px;
+
+height:14px;
+
+}
+
+.scanner{
+
+width:90px;
+
+left:15px;
+
+}
+
+.mouth{
+
+width:42px;
+
+}
+
+.orbit1{
+
+width:160px;
+
+height:160px;
+
+}
+
+.orbit2{
+
+width:200px;
+
+height:200px;
+
+}
+
+.orbit3{
+
+width:240px;
+
+height:240px;
+
+}
+
+}
+
+/* ===================================
+      PERFORMANCE
+=================================== */
+
+.ai-avatar,
+.ai-avatar *{
+
+will-change:transform,opacity;
+
+backface-visibility:hidden;
+
+transform-style:preserve-3d;
+
+}
+
+/* ==========================================================
+                END
+========================================================== */

@@ -50,6 +50,7 @@ app.register_blueprint(auth_bp)
 
 
 
+
 @app.route("/", methods=["GET"])
 def home():
 
@@ -108,6 +109,7 @@ def chat():
 
 
 
+
         if not user_id:
 
 
@@ -118,7 +120,6 @@ def chat():
                 "message":"User not logged in"
 
             }),401
-
 
 
 
@@ -142,7 +143,7 @@ def chat():
 
 
 
-        # AI MODE SELECT
+        # AI MODE
 
 
         if mode == "healthcare":
@@ -153,7 +154,6 @@ def chat():
                 message
 
             )
-
 
 
         else:
@@ -175,6 +175,10 @@ def chat():
 
 
 
+
+        # SAVE CHAT
+
+
         new_chat = ChatHistory(
 
 
@@ -184,7 +188,10 @@ def chat():
             user_message=message,
 
 
-            ai_response=ai_reply
+            ai_response=ai_reply,
+
+
+            mode=mode
 
 
         )
@@ -204,6 +211,8 @@ def chat():
 
 
 
+
+
         return jsonify({
 
 
@@ -214,6 +223,8 @@ def chat():
 
 
         })
+
+
 
 
 
@@ -261,9 +272,13 @@ def history():
     try:
 
 
-
         user_id = request.args.get(
             "user_id"
+        )
+
+
+        mode = request.args.get(
+            "mode"
         )
 
 
@@ -287,19 +302,34 @@ def history():
 
 
 
-        chats = ChatHistory.query.filter_by(
-
+        query = ChatHistory.query.filter_by(
 
             user_id=user_id
 
+        )
 
-        ).order_by(
 
+
+
+        if mode:
+
+
+            query = query.filter_by(
+
+                mode=mode
+
+            )
+
+
+
+
+
+        chats = query.order_by(
 
             ChatHistory.created_at.desc()
 
-
         ).all()
+
 
 
 
@@ -315,7 +345,6 @@ def history():
         for chat in chats:
 
 
-
             data.append({
 
 
@@ -328,10 +357,14 @@ def history():
                 "ai_response":chat.ai_response,
 
 
+                "mode":chat.mode,
+
+
                 "created_at":str(chat.created_at)
 
 
             })
+
 
 
 
@@ -357,8 +390,8 @@ def history():
 
 
 
-    except Exception as e:
 
+    except Exception as e:
 
 
         print("HISTORY ERROR:",e)
@@ -375,7 +408,6 @@ def history():
 
 
         }),500
-
 
 
 

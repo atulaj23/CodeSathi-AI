@@ -1,0 +1,1618 @@
+/* ==========================================================
+        HEALTHCARE AI
+        WORLD CLASS UI
+        PART 1 / 4
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+
+--bg:#061018;
+--bg2:#0b1825;
+--surface:#101d2c;
+
+--primary:#00C896;
+--secondary:#00D9FF;
+--accent:#7C5CFF;
+
+--text:#ffffff;
+--muted:#9CB3C9;
+
+}
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+body{
+
+font-family:"Inter",sans-serif;
+
+background:var(--bg);
+
+color:white;
+
+}
+
+/* =========================
+      PAGE
+========================= */
+
+.health-page{
+
+min-height:100vh;
+
+position:relative;
+
+overflow:hidden;
+
+background:
+
+linear-gradient(
+135deg,
+#051019,
+#081824,
+#10243A
+);
+
+}
+
+/* =========================
+      BACKGROUND
+========================= */
+
+.health-bg{
+
+position:absolute;
+
+inset:0;
+
+overflow:hidden;
+
+pointer-events:none;
+
+}
+
+.grid{
+
+position:absolute;
+
+inset:0;
+
+background-image:
+
+linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+
+linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+
+background-size:42px 42px;
+
+opacity:.20;
+
+}
+
+.blur{
+
+position:absolute;
+
+border-radius:50%;
+
+filter:blur(55px);
+
+opacity:.14;
+
+}
+
+.blur.one{
+
+width:420px;
+
+height:420px;
+
+background:#00C896;
+
+top:-120px;
+
+left:-120px;
+
+}
+
+.blur.two{
+
+width:420px;
+
+height:420px;
+
+background:#00D9FF;
+
+right:-120px;
+
+bottom:-120px;
+
+}
+
+/* =========================
+      NAVBAR
+========================= */
+
+.health-navbar{
+
+width:min(1350px,92%);
+
+margin:auto;
+
+height:90px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.health-logo{
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
+}
+
+.logo-circle{
+
+width:58px;
+
+height:58px;
+
+border-radius:18px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+background:
+
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+box-shadow:
+
+0 12px 35px rgba(0,200,150,.30);
+
+}
+
+.health-logo h2{
+
+font-size:25px;
+
+font-weight:800;
+
+}
+
+.health-logo p{
+
+font-size:13px;
+
+color:var(--muted);
+
+margin-top:4px;
+
+}
+
+.back-btn,
+
+.dashboard-btn{
+
+padding:14px 22px;
+
+border-radius:14px;
+
+text-decoration:none;
+
+background:
+
+rgba(255,255,255,.06);
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+transition:.3s;
+
+}
+
+.back-btn:hover,
+
+.dashboard-btn:hover{
+
+transform:translateY(-3px);
+
+background:
+
+rgba(255,255,255,.10);
+
+}
+
+/* =========================
+      HERO
+========================= */
+
+.health-hero{
+
+width:min(1350px,92%);
+
+margin:auto;
+
+padding:60px 0;
+
+display:grid;
+
+grid-template-columns:
+
+1.15fr
+1fr;
+
+gap:70px;
+
+align-items:center;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.hero-chip{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:10px 18px;
+
+border-radius:100px;
+
+background:
+
+rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+margin-bottom:25px;
+
+}
+
+.pulse{
+
+width:10px;
+
+height:10px;
+
+border-radius:50%;
+
+background:#00C896;
+
+box-shadow:
+
+0 0 18px #00C896;
+
+animation:pulse 1.2s infinite;
+
+}
+
+@keyframes pulse{
+
+50%{
+
+transform:scale(1.5);
+
+opacity:.45;
+
+}
+
+}
+
+.hero-left h1{
+
+font-size:72px;
+
+line-height:1.05;
+
+font-weight:900;
+
+margin-bottom:24px;
+
+}
+
+.hero-left h1 span{
+
+background:
+
+linear-gradient(
+90deg,
+#00C896,
+#00D9FF
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.hero-left p{
+
+font-size:18px;
+
+line-height:1.9;
+
+max-width:620px;
+
+color:var(--muted);
+
+}
+/* ==========================================================
+        HEALTHCARE AI
+        WORLD CLASS UI
+        PART 2 / 4
+========================================================== */
+
+/* =========================
+      HERO BUTTONS
+========================= */
+
+.hero-actions{
+
+display:flex;
+
+gap:18px;
+
+margin-top:34px;
+
+flex-wrap:wrap;
+
+}
+
+.primary-health{
+
+padding:18px 34px;
+
+border:none;
+
+border-radius:18px;
+
+cursor:pointer;
+
+font-size:16px;
+
+font-weight:700;
+
+color:white;
+
+background:
+
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+box-shadow:
+
+0 18px 40px rgba(0,200,150,.28);
+
+transition:.35s;
+
+}
+
+.primary-health:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+
+0 25px 55px rgba(0,200,150,.38);
+
+}
+
+.secondary-health{
+
+padding:18px 34px;
+
+border-radius:18px;
+
+border:1px solid rgba(255,255,255,.10);
+
+background:rgba(255,255,255,.05);
+
+color:white;
+
+text-decoration:none;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+transition:.35s;
+
+}
+
+.secondary-health:hover{
+
+background:rgba(255,255,255,.10);
+
+transform:translateY(-4px);
+
+}
+
+/* =========================
+      STATS
+========================= */
+
+.health-stats{
+
+display:flex;
+
+gap:20px;
+
+margin-top:45px;
+
+flex-wrap:wrap;
+
+}
+
+.stat-box{
+
+flex:1;
+
+min-width:170px;
+
+padding:24px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+}
+
+.stat-box:hover{
+
+transform:translateY(-8px);
+
+border-color:#00C896;
+
+box-shadow:
+
+0 20px 45px rgba(0,200,150,.15);
+
+}
+
+.stat-box h2{
+
+font-size:36px;
+
+font-weight:800;
+
+margin-bottom:10px;
+
+background:
+
+linear-gradient(
+90deg,
+#fff,
+#00D9FF
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.stat-box p{
+
+color:var(--muted);
+
+}
+
+/* =========================
+      DOCTOR PANEL
+========================= */
+
+.hero-right{
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.doctor-panel{
+
+width:430px;
+
+padding:28px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.28);
+
+}
+
+.panel-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:28px;
+
+}
+
+.traffic{
+
+display:flex;
+
+gap:8px;
+
+}
+
+.traffic span{
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+}
+
+.red{background:#ff5f57;}
+.yellow{background:#febc2e;}
+.green{background:#28c840;}
+
+.doctor-avatar{
+
+width:120px;
+
+height:120px;
+
+margin:15px auto;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:60px;
+
+background:
+
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+box-shadow:
+
+0 20px 45px rgba(0,200,150,.25);
+
+}
+
+.doctor-name{
+
+text-align:center;
+
+font-size:24px;
+
+font-weight:800;
+
+margin-top:20px;
+
+}
+
+.doctor-status{
+
+width:max-content;
+
+margin:14px auto 26px;
+
+padding:8px 18px;
+
+border-radius:100px;
+
+background:rgba(0,200,150,.15);
+
+color:#00C896;
+
+font-weight:700;
+
+font-size:13px;
+
+letter-spacing:1px;
+
+}
+
+.doctor-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:14px;
+
+}
+
+.doctor-list div{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.06);
+
+transition:.3s;
+
+}
+
+.doctor-list div:hover{
+
+transform:translateX(8px);
+
+border-color:#00D9FF;
+
+}
+
+.doctor-list span{
+
+padding:6px 12px;
+
+border-radius:100px;
+
+background:rgba(0,200,150,.12);
+
+color:#00C896;
+
+font-size:12px;
+
+font-weight:700;
+
+}
+
+/* =========================
+      SEARCH
+========================= */
+
+.medical-search{
+
+width:min(1150px,92%);
+
+margin:90px auto;
+
+text-align:center;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.medical-search h2{
+
+font-size:42px;
+
+margin-bottom:35px;
+
+font-weight:800;
+
+}
+
+.search-box-health{
+
+display:flex;
+
+gap:18px;
+
+padding:18px;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.search-box-health input{
+
+flex:1;
+
+background:transparent;
+
+border:none;
+
+outline:none;
+
+font-size:17px;
+
+color:white;
+
+}
+
+.search-box-health input::placeholder{
+
+color:#9CB3C9;
+
+}
+
+.search-box-health button{
+
+padding:18px 30px;
+
+border:none;
+
+border-radius:16px;
+
+cursor:pointer;
+
+font-size:15px;
+
+font-weight:700;
+
+background:
+
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+color:white;
+
+transition:.35s;
+
+}
+
+.search-box-health button:hover{
+
+transform:scale(1.04);
+
+}
+/* ==========================================================
+        HEALTHCARE AI
+        WORLD CLASS UI
+        PART 3 / 4
+========================================================== */
+
+/* =========================
+      AI RESPONSE
+========================= */
+
+.ai-response-section{
+
+width:min(1200px,92%);
+
+margin:90px auto;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.response-card{
+
+padding:40px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+
+0 20px 55px rgba(0,0,0,.28);
+
+transition:.35s;
+
+}
+
+.response-card:hover{
+
+transform:translateY(-8px);
+
+border-color:#00C896;
+
+}
+
+.response-top{
+
+display:flex;
+
+align-items:center;
+
+gap:20px;
+
+margin-bottom:30px;
+
+}
+
+.ai-icon{
+
+width:70px;
+
+height:70px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:32px;
+
+border-radius:20px;
+
+background:
+
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+}
+
+.response-top h3{
+
+font-size:28px;
+
+margin-bottom:6px;
+
+}
+
+.response-top p{
+
+color:var(--muted);
+
+}
+
+.response-content{
+
+line-height:2;
+
+font-size:16px;
+
+color:#D7E6F8;
+
+white-space:pre-wrap;
+
+}
+
+.response-footer{
+
+margin-top:30px;
+
+display:flex;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:14px;
+
+}
+
+.response-footer span{
+
+padding:10px 18px;
+
+border-radius:100px;
+
+background:rgba(255,255,255,.06);
+
+font-size:14px;
+
+color:#9CB3C9;
+
+}
+
+/* =========================
+      SERVICES
+========================= */
+
+.medical-services{
+
+width:min(1350px,92%);
+
+margin:120px auto;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.section-heading{
+
+text-align:center;
+
+margin-bottom:70px;
+
+}
+
+.section-heading span{
+
+display:inline-block;
+
+padding:10px 18px;
+
+border-radius:100px;
+
+background:rgba(255,255,255,.06);
+
+border:1px solid rgba(255,255,255,.08);
+
+font-size:13px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+color:#00C896;
+
+margin-bottom:18px;
+
+}
+
+.section-heading h2{
+
+font-size:50px;
+
+font-weight:800;
+
+}
+
+.service-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:28px;
+
+}
+
+.service-card{
+
+padding:34px;
+
+border-radius:28px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+}
+
+.service-card:hover{
+
+transform:translateY(-10px);
+
+border-color:#00D9FF;
+
+box-shadow:
+
+0 25px 60px rgba(0,217,255,.15);
+
+}
+
+.service-icon{
+
+width:72px;
+
+height:72px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:34px;
+
+border-radius:22px;
+
+margin-bottom:24px;
+
+background:
+
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+}
+
+.service-card h3{
+
+font-size:24px;
+
+margin-bottom:16px;
+
+}
+
+.service-card p{
+
+line-height:1.9;
+
+color:#AFC3D8;
+
+}
+
+/* =========================
+      QUICK CARDS
+========================= */
+
+.quick-actions{
+
+width:min(1350px,92%);
+
+margin:100px auto;
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:28px;
+
+}
+
+.quick-card{
+
+padding:36px;
+
+border-radius:28px;
+
+text-align:center;
+
+background:
+
+linear-gradient(
+180deg,
+rgba(255,255,255,.05),
+rgba(255,255,255,.03)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+font-size:52px;
+
+}
+
+.quick-card:hover{
+
+transform:translateY(-10px);
+
+}
+
+.quick-card h3{
+
+margin:24px 0 14px;
+
+font-size:26px;
+
+}
+
+.quick-card p{
+
+line-height:1.8;
+
+font-size:15px;
+
+color:#AFC3D8;
+
+}
+/* ==========================================================
+        HEALTHCARE AI
+        WORLD CLASS UI
+        PART 4 / 4
+========================================================== */
+
+/* =========================
+      CTA
+========================= */
+
+.health-cta{
+
+width:min(1350px,92%);
+
+margin:130px auto 80px;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.health-cta-card{
+
+padding:70px 50px;
+
+text-align:center;
+
+border-radius:36px;
+
+background:
+linear-gradient(
+135deg,
+rgba(0,200,150,.10),
+rgba(0,217,255,.08)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.25);
+
+}
+
+.cta-badge{
+
+display:inline-block;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.08);
+
+color:#00C896;
+
+font-size:13px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+margin-bottom:22px;
+
+}
+
+.health-cta-card h2{
+
+font-size:54px;
+
+font-weight:900;
+
+line-height:1.15;
+
+margin-bottom:22px;
+
+}
+
+.health-cta-card h2 span{
+
+display:block;
+
+background:
+linear-gradient(
+90deg,
+#00C896,
+#00D9FF
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.health-cta-card p{
+
+max-width:760px;
+
+margin:0 auto 34px;
+
+line-height:1.9;
+
+font-size:17px;
+
+color:#AFC3D8;
+
+}
+
+.cta-buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:18px;
+
+flex-wrap:wrap;
+
+}
+
+/* =========================
+      DISCLAIMER
+========================= */
+
+.medical-disclaimer{
+
+width:min(1200px,92%);
+
+margin:90px auto;
+
+}
+
+.warning-card{
+
+display:flex;
+
+gap:22px;
+
+align-items:flex-start;
+
+padding:28px;
+
+border-radius:24px;
+
+background:rgba(255,170,0,.08);
+
+border:1px solid rgba(255,170,0,.25);
+
+}
+
+.warning-icon{
+
+font-size:42px;
+
+flex-shrink:0;
+
+}
+
+.warning-card h3{
+
+margin-bottom:12px;
+
+font-size:24px;
+
+}
+
+.warning-card p{
+
+line-height:1.9;
+
+color:#D9E5F2;
+
+}
+
+/* =========================
+      FOOTER
+========================= */
+
+.health-footer{
+
+width:min(1350px,92%);
+
+margin:90px auto 40px;
+
+padding-top:35px;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:25px;
+
+flex-wrap:wrap;
+
+}
+
+.footer-left{
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
+}
+
+.footer-logo{
+
+width:56px;
+
+height:56px;
+
+border-radius:18px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+background:
+linear-gradient(
+135deg,
+#00C896,
+#00D9FF
+);
+
+}
+
+.footer-left h2{
+
+font-size:24px;
+
+margin-bottom:5px;
+
+}
+
+.footer-left p{
+
+color:#9CB3C9;
+
+}
+
+.footer-links{
+
+display:flex;
+
+gap:22px;
+
+}
+
+.footer-links a{
+
+color:white;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+.footer-links a:hover{
+
+color:#00D9FF;
+
+}
+
+/* =========================
+      ANIMATIONS
+========================= */
+
+.hero-left,
+.hero-right,
+.service-card,
+.quick-card,
+.response-card,
+.health-cta-card{
+
+animation:fadeUp .8s ease both;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(35px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* =========================
+      RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+.health-hero{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+.hero-left p{
+
+margin:auto;
+
+}
+
+.hero-actions{
+
+justify-content:center;
+
+}
+
+.health-stats{
+
+justify-content:center;
+
+}
+
+.service-grid,
+.quick-actions{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.hero-left h1{
+
+font-size:46px;
+
+}
+
+.section-heading h2{
+
+font-size:34px;
+
+}
+
+.health-cta-card h2{
+
+font-size:38px;
+
+}
+
+.search-box-health{
+
+flex-direction:column;
+
+}
+
+.search-box-health button{
+
+width:100%;
+
+}
+
+.service-grid,
+.quick-actions{
+
+grid-template-columns:1fr;
+
+}
+
+.warning-card{
+
+flex-direction:column;
+
+}
+
+.health-footer{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.footer-left{
+
+flex-direction:column;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.health-navbar{
+
+height:auto;
+
+padding:18px 0;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.hero-left h1{
+
+font-size:38px;
+
+}
+
+.health-cta-card{
+
+padding:45px 24px;
+
+}
+
+.health-cta-card h2{
+
+font-size:30px;
+
+}
+
+}
+
+/* =========================
+      END
+========================= */

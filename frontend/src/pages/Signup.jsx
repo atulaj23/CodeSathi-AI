@@ -1,239 +1,427 @@
-import "./Signup.css";
+import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signupUser } from "../services/api";
 
+export default function Signup(){
 
-export default function Signup() {
+const navigate=useNavigate();
 
-  const navigate = useNavigate();
+const [name,setName]=useState("");
+const [email,setEmail]=useState("");
+const [password,setPassword]=useState("");
 
+const [error,setError]=useState("");
+const [loading,setLoading]=useState(false);
 
-  const [name,setName] = useState("");
+async function handleSignup(e){
 
-  const [email,setEmail] = useState("");
+e.preventDefault();
 
-  const [password,setPassword] = useState("");
+setError("");
 
-  const [error,setError] = useState("");
+setLoading(true);
 
+if(!name.trim()||!email.trim()||!password.trim()){
 
+setError("Please fill all fields.");
 
-  const handleSignup = async()=>{
+setLoading(false);
 
+return;
 
-    try{
+}
 
+try{
 
-      const data = await signupUser({
+const data=await signupUser({
 
-        name,
+name,
+email,
+password
 
-        email,
+});
 
-        password
+if(data.success){
 
-      });
+navigate("/login");
 
+}
 
+else{
 
-      if(data.success){
+setError(
 
+data.message ||
 
-        alert("Account created successfully 🚀");
+"Signup failed."
 
+);
 
-        navigate("/");
+}
 
+}
 
-      }
-      else{
+catch(error){
 
+console.log(error);
 
-        setError(
-          data.message
-        );
+setError(
 
+"Unable to connect server."
 
-      }
+);
 
+}
 
+finally{
 
-    }
-    catch(err){
+setLoading(false);
 
+}
 
-      console.log(err);
+}
 
+return(
 
-      setError(
-        "Server error"
-      );
+<div className="login-page">
 
+<div className="bg-grid"></div>
 
-    }
+<div className="bg-blur blur1"></div>
 
+<div className="bg-blur blur2"></div>
 
-  };
+{/* LEFT */}
 
+<div className="ai-showcase">
 
+<div className="ai-core">
 
+<div className="ring ring1"></div>
 
+<div className="ring ring2"></div>
 
-  return (
+<div className="ring ring3"></div>
 
-    <div className="signup-page">
+<div className="core-icon">
 
+🚀
 
-      <div className="bg-blur signup-blur1"></div>
+</div>
 
-      <div className="bg-blur signup-blur2"></div>
+</div>
 
+<p className="ai-badge">
 
+CREATE YOUR ACCOUNT
 
-      <div className="signup-card">
+</p>
 
+<div className="showcase-text">
 
-        <h1>
-          🚀 Join CodeSathi AI
-        </h1>
+<h1>
 
+Start Your
 
-        <p>
-          Create your AI coding partner
-        </p>
+<span>
 
+ AI Journey
 
+</span>
 
+</h1>
 
-        <input
+<p className="show-desc">
 
-          type="text"
+Join thousands of developers and learners using one intelligent workspace for Coding, Healthcare and AI productivity.
 
-          placeholder="Full Name"
+</p>
 
-          value={name}
+</div>
 
-          onChange={(e)=>setName(e.target.value)}
+<div className="feature-list">
 
-        />
+<div className="feature-item">
 
+<div className="feature-icon">
 
+🤖
 
-        <input
+</div>
 
-          type="email"
+<div>
 
-          placeholder="Email"
+<h3>
 
-          value={email}
+AI Coding
 
-          onChange={(e)=>setEmail(e.target.value)}
+</h3>
 
-        />
+<p>
 
+Generate production-ready code instantly.
 
+</p>
 
-        <input
+</div>
 
-          type="password"
+</div>
 
-          placeholder="Password"
+<div className="feature-item">
 
-          value={password}
+<div className="feature-icon">
 
-          onChange={(e)=>setPassword(e.target.value)}
+🩺
 
-        />
+</div>
 
+<div>
 
+<h3>
 
+Healthcare AI
 
-        <h3>
-          Choose your AI Theme
-        </h3>
+</h3>
 
+<p>
 
+Understand reports and medical topics.
 
-        <div className="theme-options">
+</p>
 
+</div>
 
-          <label>
+</div>
 
-            <input 
-              type="radio"
-              name="theme"
-              value="blue"
-            />
+<div className="feature-item">
 
-            🤖 Cyber Blue
+<div className="feature-icon">
 
-          </label>
+🧠
 
+</div>
 
+<div>
 
+<h3>
 
-          <label>
+Smart Memory
 
-            <input 
-              type="radio"
-              name="theme"
-              value="pink"
-            />
+</h3>
 
-            🌸 Nova Pink
+<p>
 
-          </label>
+Continue conversations anytime.
 
+</p>
 
+</div>
 
-        </div>
+</div>
 
+<div className="feature-item">
 
+<div className="feature-icon">
 
+☁️
 
-        {
-          error && (
+</div>
 
-            <p className="error">
-              {error}
-            </p>
+<div>
 
-          )
-        }
+<h3>
 
+Cloud Workspace
 
+</h3>
 
+<p>
 
-        <button onClick={handleSignup}>
+Your chats stay synced securely.
 
-          Create Account
+</p>
 
-        </button>
+</div>
 
+</div>
 
+</div>
 
+</div>
 
-        <span>
+{/* RIGHT */}
 
-          Already have an account?{" "}
+<div className="login-card">
 
-          <Link to="/">
+<div className="login-top">
 
-            Login
+<div className="login-logo">
 
-          </Link>
+✨
 
+</div>
 
-        </span>
+<h2>
 
+Create Account
 
+</h2>
 
-      </div>
+<p>
 
+Welcome to CodeSathi AI
 
-    </div>
+</p>
 
-  );
+</div>
+
+{
+
+error &&
+
+<div className="error-box">
+
+⚠️ {error}
+
+</div>
+
+}
+
+<form onSubmit={handleSignup}>
+
+<div className="input-group">
+
+<label>
+
+Full Name
+
+</label>
+
+<input
+
+type="text"
+
+placeholder="John Doe"
+
+value={name}
+
+onChange={(e)=>setName(e.target.value)}
+
+/>
+
+</div>
+
+<div className="input-group">
+
+<label>
+
+Email
+
+</label>
+
+<input
+
+type="email"
+
+placeholder="example@email.com"
+
+value={email}
+
+onChange={(e)=>setEmail(e.target.value)}
+
+/>
+
+</div>
+
+<div className="input-group">
+
+<label>
+
+Password
+
+</label>
+
+<input
+
+type="password"
+
+placeholder="Create Password"
+
+value={password}
+
+onChange={(e)=>setPassword(e.target.value)}
+
+/>
+
+</div>
+
+<button
+
+className="login-btn"
+
+type="submit"
+
+disabled={loading}
+
+>
+
+{
+
+loading
+
+?
+
+"Creating Account..."
+
+:
+
+"Create Account 🚀"
+
+}
+
+</button>
+
+</form>
+
+<div className="login-divider">
+
+<span>
+
+OR
+
+</span>
+
+</div>
+
+<p className="signup-text">
+
+Already have an account?
+
+<Link
+
+to="/login"
+
+className="signup-link"
+
+>
+
+Login
+
+</Link>
+
+</p>
+
+<div className="bottom-note">
+
+🌟 AI Powered • Secure • Fast • Modern
+
+</div>
+
+</div>
+
+</div>
+
+);
 
 }
