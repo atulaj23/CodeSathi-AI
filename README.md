@@ -86,12 +86,13 @@ python app.py
 
 ## 📸 Screenshots
 
-https://1drv.ms/i/c/d62dcf926404249e/IQAKp_GQP2YNTKM9c7J2o72HAWz4WySgjJfC0KPesEkeVpE?e=SoVwNG
-<img width="1366" height="768" alt="Screenshot (170)" src="https://github.com/user-attachments/assets/0f262ba8-b172-4139-8dc3-be5a786ea21c" />
-<img width="1366" height="768" alt="Screenshot (171)" src="https://github.com/user-attachments/assets/8c47b582-a407-4362-9c80-8ae26def2132" />
-<img width="1366" height="768" alt="Screenshot (167)" src="https://github.com/user-attachments/assets/56baf875-b10f-48b4-a5aa-8a55317d4051" />
-<img width="1366" height="768" alt="Screenshot (166)" src="https://github.com/user-attachments/assets/9f3c6123-88d6-4d60-acfb-4805dcffeee5" />
-<img width="1366" height="768" alt="Screenshot (165)" src="https://github.com/user-attachments/assets/1f58ee45-fbaa-40bc-95e7-0959fd2f8237" />
+<img width="1333" height="632" alt="Screenshot (169)" src="https://github.com/user-attachments/assets/692f3aed-1deb-410c-952a-754c515d74ea" />
+<img width="1339" height="594" alt="Screenshot (170)" src="https://github.com/user-attachments/assets/619d9a06-a36a-4274-8c0e-84eaccdc77a9" />
+<img width="1348" height="613" alt="Screenshot (168)" src="https://github.com/user-attachments/assets/f0ff9943-7db9-47d4-ba0e-51cdfeddd765" />
+<img width="1350" height="629" alt="Screenshot (167)" src="https://github.com/user-attachments/assets/1c523994-1013-41a8-8b4c-acd2a6c45c78" />
+<img width="1334" height="594" alt="Screenshot (166)" src="https://github.com/user-attachments/assets/bafdbe9f-1ff7-49ac-91e7-3f27a9e91dc4" />
+<img width="1333" height="592" alt="Screenshot (165)" src="https://github.com/user-attachments/assets/706e433d-b709-46df-9435-10112b690138" />
+<img width="1319" height="589" alt="Screenshot (171)" src="https://github.com/user-attachments/assets/abee5a5e-3418-4804-a633-99474901beff" />
 
 
 ---
