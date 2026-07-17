@@ -118,4 +118,4 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 Built by **[Atul Jaiswal]**
 
 - 
-- LinkedIn: [Your LinkedIn](www.linkedin.com/in/atujai)
+- LinkedIn: [Your LinkedIn](www.linkedin.com/in/atujais)
